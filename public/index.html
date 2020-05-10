@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foundation for Sites</title>
+    <link rel="stylesheet" href="css/foundation.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <nav class="top-bar topbar-responsive">
+        <div class="top-bar-title">
+          <span data-responsive-toggle="topbar-responsive" data-hide-for="medium">
+            <button class="menu-icon" type="button" data-toggle></button>
+          </span>
+          <a class="topbar-responsive-logo" href="#"><strong>DCC</strong></a>
+        </div>
+        <div id="topbar-responsive" class="topbar-responsive-links">
+          <div class="top-bar-right">
+            <ul class="menu simple vertical medium-horizontal">
+              <li><a href="#">Home</a></li>
+              <li><a href="#">About</a></li>
+              <li><a href="#">Services</a></li>
+              <li><a href="#">Works</a></li>
+              <li><a href="#">News</a></li>
+              <li><a href="#">Contact</a></li>
+              <li>
+                <button type="button" class="button hollow topbar-responsive-button">Categories</button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      
+      
+  
+      <div class="hero-section">
+        <div class="hero-section-text">
+          <h1>DCC</h1>
+          <h2>Daily Commuter Carpool</h2>
+          <h5>Reduce traffic and air pullution, Help a hard worker, Make journey to work more sociable</h5>
+          <a class="button button-rounded-hover1">Register as a Passenger</a>
+          <a class="button button-rounded-hover2">Register as a <br> Driver</a>
+        </div>
+      </div>
+   
+
+    
+    
+    <div class="flip-card card" ontouchstart="this.classList.toggle('hover');">
+      <div class="flip-card-inner">
+        <div class="flip-card-inner-front">
+          <span>Book your next adventure</span>
+        </div>
+        <div class="flip-card-inner-back">
+          <h3 class="flip-card-inner-back-title">Visit Yetiland</h3>
+          <p class="flip-card-inner-back-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo doloremque accusantium, repellendus ex debitis molestias, recusandae dignissimos delectus.</p>
+          <a href="#" class="button success">Book now</a>
+        </div>
+      </div>
+    </div>
+    
+s    
+    <p class="api"></p>
+    <script>
+        // Building URL to query UV index database
+        const departure = "L4T 1M9";
+        const arrival = "27 King's College Cir, Toronto";
+        const APIKey = "6eed213690fc4c8d8a3e6e40aa832892"
+        const queryURL = "https://api.opencagedata.com/geocode/v1/json?q=" + departure + "&key=" + APIKey;
+        console.log(queryURL);
+        console.log("---------------")
+        $.ajax({
+            url: queryURL,
+            method: "GET",
+            crossDomain: true,
+            dataType: "jsonp",
+            xhrFields: {
+                withCredentials: true
+            },
+
+            // We store UV retrieved data inside of an object called "response2"
+            success: function(response) {
+                console.log(JSON.stringify(response));
+                console.log("-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- - ");
+                console.log(response);
+                $(".api").html(response.results[0].formatted);
+            }
+        })
+    </script>
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/vendor/what-input.js"></script>
+    <script src="js/vendor/foundation.js"></script>
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>
+
+</html>
