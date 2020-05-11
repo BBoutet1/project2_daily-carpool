@@ -1,6 +1,7 @@
 const axios = require("axios");
 
 const time = {
+
     async getUser(origin, destination, waypointsArray) {
         try {
             //const origin = "L7A 0W6";
@@ -16,15 +17,21 @@ const time = {
             for (let i = 0; i < legs.length; i++) {
                 durationSeconds += legs[i].duration.value;
             }
-            // Converting seconds in hours and minutes
-            const hours = Math.floor(durationSeconds / 3600);
-            const minutes = Math.floor((durationSeconds % 3600) / 60);
-            const duration = hours + " hours " + minutes + "minutes"
-            console.log(duration);
+            console.log(durationSeconds);
+
             return durationSeconds;
         } catch (err) {
             console.log(err);
         }
     },
 };
+async function getD() {
+    const origin = "L7A 0W6";
+    const destination = "L4W 2S5";
+    const waypoints = "L7A 3P6|L6T 4P8";
+    var dur = await time.getDuration(origin, destination, waypoints)
+    console.log(dur)
+}
+getD()
+
 module.exports = time;
