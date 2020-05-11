@@ -12,3 +12,63 @@ https://maps.googleapis.com/maps/api/distancematrix/json?origins=Vancouver+BC|Se
 Api key with destination and waypoints
 
 https://maps.googleapis.com/maps/api/directions/json?origin=Boston,MA&destination=Concord,MA&waypoints=Charlestown,MA|Lexington,MA
+
+
+browserify is a "require" for browser
+
+$ npm install browserify
+
+$ browserify routesMap.js -o bundle.js
+
+
+var numWaypoints = jsonArray.passenger1.length;
+let waypoints = ""
+for (var i = 0; i < numWaypoints; i++) {
+    if (i !== 0) { waypoints = waypoints + "|" + sonArray.passenger1[i] } else { waypoints = +jsonArray.passenger1[i] }
+};
+
+async function durations() {
+    // calculate route duration
+    var directDuration = await time.getDuration(jsonArray.driver[0], jsonArray.driver[1]);
+    var carPoolDuration = await time.getDuration(jsonArray.driver[0], jsonArray.driver[1], waypoints, numWaypoints);
+    var timeDifference = carPoolDuration[0] - directDuration[0];
+    console.log(numWaypoints)
+    console.log(waypoints)
+    console.log(directDuration)
+    console.log(carPoolDuration)
+}
+durations()
+
+
+
+console.log(numWaypoints)
+console.log(waypoints)
+console.log(directDuration)
+console.log(carPoolDuration)
+
+
+
+//Time conversion
+function timeConversion(time) {
+    // Converting seconds in hours and minutes
+    const hours = Math.floor(time / 3600);
+    const minutes = Math.floor((time % 3600) / 60);
+    const duration = hours + " hours " + minutes + "minutes"
+    return duration;
+}
+timeDifference = timeConversion(timeDifference);
+carPoolDuration = timeConversion(carPoolDuration);
+directDuration = timeConversion(directDuration);
+
+// Writting time on Map
+
+document.getElementById("directTime").innerHTML = directDuration;
+document.getElementById("carpoolTime").innerHTML = carPoolDuration;
+document.getElementById("difference").innerHTML = timeDifference
+
+app.use((req, res,next)=>{
+res.setHeader('Access-Control-Allow-Origin', '*');
+res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
+res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorisation');
+next();
+});
