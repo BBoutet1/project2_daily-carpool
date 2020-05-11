@@ -6,11 +6,31 @@ var requestArray = [],
 
 // A JSON Array containing some people/routes and the destinations/stops
 var jsonArray = {
-    "Driver": ["L7A 0W6", "L4W 2S5"],
-    "Passenger": ["L7A 3P6", "L6T 4P8"]
+    "driver": ["L7A 0W6", "L4W 2S5"],
+    "passenger1": ["L7A 3P6", "L6T 4P8"]
 }
 
-// 16 Standard Colours for navigation polylines
+
+var numWaypoints = jsonArray.passenger1.length;
+let waypoints = ""
+for (var i = 0; i < numWaypoints; i++) {
+    if (i !== 0) { waypoints = waypoints + "|" + jsonArray.passenger1[i] } else { waypoints = +jsonArray.passenger1[i] }
+};
+var time = require("./durations");
+async function durations() {
+    // calculate route duration
+    var directDuration = await time.getDuration(jsonArray.driver[0], jsonArray.driver[1]);
+    var carPoolDuration = await time.getDuration(jsonArray.driver[0], jsonArray.driver[1], waypoints);
+    var timeDifference = carPoolDuration[0] - directDuration[0];
+    console.log(numWaypoints)
+    console.log(waypoints)
+    console.log(directDuration)
+    console.log(carPoolDuration)
+}
+durations()
+
+
+// Standard Colours for navigation polylines
 var colourArray = ['maroon', 'purple', 'aqua', 'red', 'green', 'silver', 'olive', 'blue', 'yellow', 'teal'];
 
 // Let's make an array of requests which will become individual polylines on the map.
