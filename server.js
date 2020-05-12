@@ -6,6 +6,7 @@
 // =============================================================
 
 var express = require("express");
+const bodyParser = require('body-parser');
 
 // Sets up the Express App
 // =============================================================
@@ -17,7 +18,9 @@ var db = require("./models");
 
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
+
 app.use(express.json());
+
 
 // Static directory
 app.use(express.static("public"));
