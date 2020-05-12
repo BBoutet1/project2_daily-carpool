@@ -10,13 +10,12 @@ var jsonArray = {
     "passenger1": ["L7A 3P6", "L6T 4P8"]
 }
 
-
 var numWaypoints = jsonArray.passenger1.length;
 let waypoints = ""
 for (var i = 0; i < numWaypoints; i++) {
     if (i !== 0) { waypoints = waypoints + "|" + jsonArray.passenger1[i] } else { waypoints = +jsonArray.passenger1[i] }
 };
-var time = require("./durations");
+
 async function durations() {
     // calculate route duration
     var directDuration = await time.getDuration(jsonArray.driver[0], jsonArray.driver[1]);
