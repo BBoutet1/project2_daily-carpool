@@ -70,7 +70,8 @@ module.exports = function(app) {
         poolDuration = await timeConversion(poolDurationSec);
         timeDifference = await timeConversion(timeDifferenceSec);
 
-        driverData = [{
+
+        driverData = {
                 name: "",
                 homeAddress: origin,
                 workAddress: destination,
@@ -80,7 +81,7 @@ module.exports = function(app) {
                 poolDuraction: poolDuration,
                 timeDifference: timeDifference,
                 passagenrNumber: 0,
-            }]
+            }
             // Calling the upsertDriver function and passing in the DriverData objet
             //===========================================================================
         upsertDriver(driverData);
