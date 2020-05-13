@@ -33,26 +33,23 @@
                     <li><a href="#">News</a></li>
                     <li><a href="#">Contact</a></li>
                     <li>
-                        <button type="button" class="button hollow topbar-responsive-button">Login</button>
+                        <button type="button" class="button hollow topbar-responsive-button">Categories</button>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-
-
     <div class="hero-section">
         <div class="hero-section-text">
             <h1>DCC</h1>
             <h2>Daily Commuter Carpool</h2>
             <h5>Reduce traffic and air pullution, Help a hard worker, Make journey to work more sociable</h5>
-            <a class="button button-rounded-hover1">Register as a Passenger</a>
-            <a class="button button-rounded-hover2">Register as a <br> Driver</a>
-            
+            <a href="http://localhost:8080/passenger" class="button button-rounded-hover1">Join as <br> a Passenger</a>
+            <a href="http://localhost:8080/driver" class="button button-rounded-hover2">Join as a <br> Driver</a>
+            <a href="http://localhost:8080/continue" class="button button-rounded-hover5"> User<br> continue</a>
         </div>
     </div>
-
 
     <div class="flip-card card" ontouchstart="this.classList.toggle('hover');">
         <div class="flip-card-inner">
@@ -67,38 +64,6 @@
         </div>
     </div>
 
-    s
-    <p class="api"></p>
-    <script>
-        // Building URL to query UV index database
-        const departure = "L4T 1M9";
-        const arrival = "27 King's College Cir, Toronto";
-        const APIKey = "6eed213690fc4c8d8a3e6e40aa832892"
-        const queryURL = "https://api.opencagedata.com/geocode/v1/json?q=" + departure + "&key=" + APIKey;
-        console.log(queryURL);
-        console.log("---------------")
-        $.ajax({
-            url: queryURL,
-            method: "GET",
-            crossDomain: true,
-            dataType: "jsonp",
-            xhrFields: {
-                withCredentials: true
-            },
-
-            // We store UV retrieved data inside of an object called "response2"
-            success: function(response) {
-                console.log(JSON.stringify(response));
-                console.log("-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- - ");
-                console.log(response);
-                $(".api").html(response.results[0].formatted);
-            }
-        })
-    </script>
-    <script src="js/vendor/jquery.js"></script>
-    <script src="js/vendor/what-input.js"></script>
-    <script src="js/vendor/foundation.js"></script>
-    <script src="js/app.js"></script>
 
 </body>
 
