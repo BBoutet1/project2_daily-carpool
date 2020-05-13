@@ -4,11 +4,19 @@ var num, map, data, bounds;
 var requestArray = [],
     renderArray = [];
 
+
 // A JSON Array containing some people/routes and the destinations/stops
+
+
+
+//=================================================================
 var jsonArray = {
     "driver": ["L7A 0W6", "L4W 2S5"],
     "passenger1": ["L7A 3P6", "L6T 4P8"]
 }
+
+
+//===================================================================
 
 var numWaypoints = jsonArray.passenger1.length;
 let waypoints = ""
