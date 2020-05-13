@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 DROP DATABASE IF EXISTS carpool_db;
 CREATE DATABASE carpool_db;
 USE carpool_db;
@@ -62,9 +61,3 @@ CREATE TABLE DriverCar (
     PRIMARY KEY (id)
 );
 
-=======
--- Drops the blogger if it exists currently --
-DROP DATABASE IF EXISTS carpool_db;
--- Creates the "blogger" database --
-CREATE DATABASE carpool_db;
->>>>>>> bac0cdb327973fed818380a7bd128cc321aef753

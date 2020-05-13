@@ -5,6 +5,10 @@ module.exports = function(sequelize, DataTypes) {
         homeAddress: DataTypes.STRING,
         workAddress: DataTypes.STRING,
         email: DataTypes.STRING,
+        waypoints: DataTypes.STRING,
+        directDuration: DataTypes.INTEGER,
+        poolDuraction: DataTypes.INTEGER,
+        timeDifference: DataTypes.INTEGER,
         passagenrNumber: DataTypes.INTEGER
     });
 
