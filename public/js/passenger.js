@@ -1,5 +1,4 @@
 $(document).ready(function() {
-
     // Getting references to the name input and driver container, as well as the table body
     var driverName = "";
     // var driverEmail = $("#email");
@@ -8,7 +7,7 @@ $(document).ready(function() {
 
     // Adding event listeners to the form to create a new object, and the button to delete
     // an Driver
-    $("#driver-form").on("submit", handleDriverFormSubmit);
+    $("#passenger-form").on("submit", handleDriverFormSubmit);
     //$(document).on("click", ".delete-driver", handleDeleteButtonPress);
 
     // Getting the initial list of Drivers
@@ -17,7 +16,8 @@ $(document).ready(function() {
     // A function to handle what happens when the form is submitted to create a new Driver
     function handleDriverFormSubmit(event) {
         event.preventDefault();
-        // Getting references to the name input and driver container, as well as the table body
+        console.log("toto")
+            // Getting references to the name input and driver container, as well as the table body
         driverName = $("#name");
         // var driverEmail = $("#email");
         driverOrigin = $("#origin");
@@ -43,7 +43,7 @@ $(document).ready(function() {
     // A function for creating an driver. Calls getDrivers upon completion
     function upsertDriver(driverData) {
         console.log(driverData)
-        $.post("/api/drivers", driverData)
+        $.post("/api/passengers", driverData)
             .then(getDrivers);
     }
 

@@ -18,9 +18,21 @@
          }
          driverData()
          $("#directTime").html(response.directDuration);
-         $("#poolTime").html(response.poolDuraction);
-         $("#difference").html(response.timeDifference);
 
-
+         let checked = ""
+         $("input:checked").val()
+         "";
+         $("input").on("click", function() {
+             // access properties using this keyword
+             let checked = $("input:checked").val();
+             console.log(checked)
+             if (checked == "passenger1") {
+                 $("#poolTime").html(response.poolDuraction);
+                 $("#difference").html(response.timeDifference);
+             } else {
+                 $("#poolTime").html("No selection");
+                 $("#difference").html("No selection");
+             }
+         })
 
      });
