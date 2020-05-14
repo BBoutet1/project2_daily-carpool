@@ -4,6 +4,7 @@ module.exports = function(sequelize, DataTypes) {
         name: DataTypes.STRING,
         homeAddress: DataTypes.STRING,
         workAddress: DataTypes.STRING,
+        type: DataTypes.STRING,
     });
 
     Passenger.associate = function(models) {

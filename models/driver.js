@@ -8,7 +8,8 @@ module.exports = function(sequelize, DataTypes) {
         directDuration: DataTypes.INTEGER,
         poolDuraction: DataTypes.INTEGER,
         timeDifference: DataTypes.INTEGER,
-        passagenrNumber: DataTypes.INTEGER
+        
+        type: DataTypes.STRING,
     });
 
     Driver.associate = function(models) {

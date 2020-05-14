@@ -34,7 +34,7 @@ $(document).ready(function() {
             directDuration: 0,
             poolDuraction: 0,
             timeDifference: 0,
-            passagenrNumber: 0,
+           type:"Driver"
         });
     }
 
