@@ -1,5 +1,4 @@
 $(document).ready(function() {
-
     // Getting references to the name input and driver container, as well as the table body
     var driverName = "";
     // var driverEmail = $("#email");
@@ -31,7 +30,6 @@ $(document).ready(function() {
             name: driverName.val().trim(),
             homeAddress: driverOrigin.val().trim(),
             workAddress: driverDestination.val().trim(),
-            email: "",
             waypoints: "",
             directDuration: 0,
             poolDuraction: 0,
