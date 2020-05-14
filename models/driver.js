@@ -8,7 +8,6 @@ module.exports = function(sequelize, DataTypes) {
         directDuration: DataTypes.INTEGER,
         poolDuraction: DataTypes.INTEGER,
         timeDifference: DataTypes.INTEGER,
-        
         type: DataTypes.STRING,
     });
 

@@ -23,7 +23,7 @@ module.exports = function(app) {
         // In this case, just db.Author
         db.Passenger.findAll({
             where: query,
-            include: [db.Driver]
+            // include: [db.Driver]
         }).then(function(dbPassenger) {
             res.json(dbPassenger);
         });
