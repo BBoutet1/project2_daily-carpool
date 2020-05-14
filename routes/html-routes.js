@@ -20,12 +20,19 @@ module.exports = function(app) {
 
     // index route loads view.html
     app.get("/driver", function(req, res) {
-        res.sendFile(path.join(__dirname, "../public/driver.html"));
+        res.sendFile(path.join(__dirname, "../public/Driver.html"));
     });
 
     // index route loads view.html
     app.get("/passenger", function(req, res) {
-        res.sendFile(path.join(__dirname, "../public/passenger.html"));
+        res.sendFile(path.join(__dirname, "../public/Passenger.html"));
+    });
+    //loads new pages added to help with storing and retreving user input data
+    app.get("/passengerReservation", function(req, res) {
+        res.sendFile(path.join(__dirname, "../public/passengerReservation.html"));
+    });
+    app.get("/driverList", function(req, res) {
+        res.sendFile(path.join(__dirname, "../public/driverList.html"));
     });
 
     // authors route loads routesMap.html

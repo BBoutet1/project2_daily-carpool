@@ -15,8 +15,28 @@
     <!-- Somewhere in the DOM for the map to be rendered -->
     <div id="map-canvas"></div>
     <div id="right-panel">
-        <h1 id="userType">Driver</h1>
+       
+        
         <h1 id="userType">Passenger</h1>
+        <table style="width:100%">
+            <tr>
+                
+              <th>Name</th>
+              
+                
+              <th>Home address</th> 
+              
+              <th>Work address</th>
+            </tr>
+            
+            <tr>
+                <td id ="name"></td>
+                <td id ="origin"></td> 
+                <td id ="dest"></td>
+              </tr>
+           
+          </table> 
+   
         <p>Direct route duration: <span style="color: darkblue;" id="directTime"></span></p>
         <p>Carpool duration: <span style="color: darkblue;" id="poolTime">No selection</span></p>
         <p>Time difference: <span style="color: darkblue;" id="difference">No selection</span></p>
@@ -50,7 +70,7 @@
 
     <script type="text/javascript" src="js/driver.js"></script>
 
-
+    <script type="text/javascript" src="js/duration.js"></script>
 
 </body>
 

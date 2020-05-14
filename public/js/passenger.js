@@ -30,7 +30,8 @@ $(document).ready(function() {
             name: passengerName.val().trim(),
             homeAddress: passengerOrigin.val().trim(),
             workAddress: passengerDestination.val().trim(),
-            waypoints: "",
+           
+            type: "Passenger",
         });
     }
 
