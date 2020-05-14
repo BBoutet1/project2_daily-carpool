@@ -40,8 +40,15 @@ module.exports = function(app) {
         res.sendFile(path.join(__dirname, "../public/routesMap.html"));
     });
 
+    // authors route loads routesMap.html
+    app.get("/passenger-map", function(req, res) {
+        res.sendFile(path.join(__dirname, "../public/routesMapPassenger.html"));
+    });
 
 
-
+    // authors route loads routesMap.html
+    app.get("/continue", function(req, res) {
+        res.sendFile(path.join(__dirname, "../public/continue.html"));
+    });
 
 };
