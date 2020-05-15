@@ -64,8 +64,8 @@ $(document).ready(function() {
             for (var i = 0; i < data.length; i++) {
                 rowsToAdd.push(createPassengerRow(data[i]));
             }
-            // renderPassengerList(rowsToAdd);
-            passengerName.val("");
+            //renderPassengerList(rowsToAdd);
+            //passengerName.val("");
         });
     }
 

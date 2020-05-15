@@ -65,4 +65,14 @@
       color: blue
   }
   
+  #userName,
+  #userOrigin,
+  #userType {
+      height: 30px;
+  }
+  
+  #userOrigin {
+      height: 30px;
+  }
+  
   ;

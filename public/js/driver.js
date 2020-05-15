@@ -1,9 +1,9 @@
 $(document).ready(function() {
     // Getting references to the name input and driver container, as well as the table body
-    var driverName = "";
+    let driverName = "";
     // var driverEmail = $("#email");
-    var driverOrigin = "";
-    var driverDestination = "";
+    let driverOrigin = "";
+    let driverDestination = "";
 
     // Adding event listeners to the form to create a new object, and the button to delete
     // an Driver
@@ -68,8 +68,8 @@ $(document).ready(function() {
             for (var i = 0; i < data.length; i++) {
                 rowsToAdd.push(createDriverRow(data[i]));
             }
-            // renderDriverList(rowsToAdd);
-            driverName.val("");
+            //renderDriverList(rowsToAdd);
+            // driverName.val("");
         });
     }
 

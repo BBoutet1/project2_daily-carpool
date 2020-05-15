@@ -15,14 +15,23 @@ var jsonArray = {
     "passenger1": ["L7A 3P6", "L6T 4P8"]
 }
 
+// $("#passengerP").on("click", function() {
+//     jsonArray.passenger1[0] = "L0H 1J0"
+//     jsonArray.passenger1[0] = "L3T 3M9"
+//     init();
+//     var myWindow = window.open("http://localhost:8080/map")
+// });
+
+
+
 
 //===================================================================
 
 var numWaypoints = jsonArray.passenger1.length;
-let waypoints = ""
-for (var i = 0; i < numWaypoints; i++) {
-    if (i !== 0) { waypoints = waypoints + "|" + jsonArray.passenger1[i] } else { waypoints = +jsonArray.passenger1[i] }
-};
+// let detour = ""
+// for (var i = 0; i < numWaypoints; i++) {
+//     if (i !== 0) { detour = detour + "|" + jsonArray.passenger1[i] } else { detour = +jsonArray.passenger1[i] }
+// };
 
 // Standard Colours for navigation polylines
 var colourArray = ['maroon', 'purple', 'aqua', 'red', 'green', 'silver', 'olive', 'blue', 'yellow', 'teal'];

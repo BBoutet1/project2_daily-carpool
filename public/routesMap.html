@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link type="text/css" rel="stylesheet" href="css/routesMap.css" />
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <title>Document</title>
+    <title>Routes Map</title>
 
 </head>
 
@@ -16,8 +16,8 @@
     <div id="map-canvas"></div>
     <div id="right-panel">
 
-        <h3 id="userName">
-        </h3>
+        <h1 id="userName">
+        </h1>
         <h3 id="userType"> You are a
         </h3>
         <table style="width:95%">
@@ -39,23 +39,27 @@
                 <th>Detoured time</th>
             </tr>
             <tr>
-                <td id="directTime"></td>
-                <td id="detouredTime">No Selection</td>
-                <td id="difference">No Selection</td>
+                <td id="directTime">0 houres 26 minutes</td>
+                <td id="detouredTime">0 hours 45 minutes</td>
+                <td id="difference">0 hours 19 minutes</td>
             </tr>
         </table>
         <div style="width:95%">
             <label for="list">Select a driver:</label>
-            <form style="float: left; width: 500px; height: 30px;" class="passengers">
-                <select style="float: left; width: 85%; height: 100%;" id="psgSelect"></select>
+            <form style="float: left; width: 98%; height: 30px;" id="psgSelect">
+                <select style="float: left; width: 85%; height: 100%;" id="psgSelect">
+                <option value="">Brice</option>
+                <option value="">Bernard</option>
+                <option value="">Joey</option>
+                </select>
                 <input style="height: 30px; background-color:green;" id="route" type="submit" value="Submit">
             </form>
         </div>
-
     </div>
     <div>
-        <form>
-            <input type="submit" value="Submit">
+        <for>
+            </form>
+            <button id="passengerP" type="button" value="Submit">
         </form>
     </div>
     <!-- Load the Google Maps aPI -->
@@ -64,8 +68,6 @@
     <!-- All of the script for multiple requests -->
     <script type="text/javascript" src="js/routesMap.js"></script>
 
-    <!-- All of the script for multiple requests -->
-    <script type="text/javascript" src="js/durations.js"></script>
 
     <!-- <script type="text/javascript" src="js/continue.js"></script> -->
 
@@ -73,7 +75,7 @@
 
     <script type="text/javascript" src="js/driver.js"></script>
 
-    <script type="text/javascript" src="js/duration.js"></script>
+    <script type="text/javascript" src="js/login.js"></script>
 
 </body>
 
