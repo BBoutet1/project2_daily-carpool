@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link type="text/css" rel="stylesheet" href="css/routesMap.css" />
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <title>Document</title>
+    <title>Routes Map</title>
 
 </head>
 
@@ -15,44 +15,51 @@
     <!-- Somewhere in the DOM for the map to be rendered -->
     <div id="map-canvas"></div>
     <div id="right-panel">
-       
-        
-        <h1 id="userType">Passenger</h1>
-        <table style="width:100%">
+
+        <h1 id="userName">
+        </h1>
+        <h3 id="userType"> You are a
+        </h3>
+        <table style="width:95%">
             <tr>
-                
-              <th>Name</th>
-              
-                
-              <th>Home address</th> 
-              
-              <th>Work address</th>
+                <th>Name</th>
+                <th>Home address</th>
+                <th>Work address</th>
             </tr>
-            
             <tr>
-                <td id ="name"></td>
-                <td id ="origin"></td> 
-                <td id ="dest"></td>
-              </tr>
-           
-          </table> 
-   
-        <p>Direct route duration: <span style="color: darkblue;" id="directTime"></span></p>
-        <p>Carpool duration: <span style="color: darkblue;" id="poolTime">No selection</span></p>
-        <p>Time difference: <span style="color: darkblue;" id="difference">No selection</span></p>
-        <form class="passengers">
-            <input type="checkbox" value="passenger1">
-            <label for="passenger1"> Passenger 1</label><br>
-            <input type="checkbox" value="passenger2">
-            <label for="passenger2"> Passenger 2</label><br>
-            <input type="checkbox" value="passenger3">
-            <label for="passenger3"> Passenger 3</label><br>
-            <input id="route" type="submit" value="Submit">
-        </form>
+                <td id="name"></td>
+                <td id="origin"></td>
+                <td id="dest"></td>
+            </tr>
+        </table>
+        <table style="width:95%">
+            <tr>
+                <th>Direct route duration</th>
+                <th>Detoured route duration</th>
+                <th>Detoured time</th>
+            </tr>
+            <tr>
+                <td id="directTime">0 houres 26 minutes</td>
+                <td id="detouredTime">0 hours 45 minutes</td>
+                <td id="difference">0 hours 19 minutes</td>
+            </tr>
+        </table>
+        <div style="width:95%">
+            <label for="list">Select a driver:</label>
+            <form style="float: left; width: 98%; height: 30px;" id="psgSelect">
+                <select style="float: left; width: 85%; height: 100%;" id="psgSelect">
+                <option value="">Brice</option>
+                <option value="">Bernard</option>
+                <option value="">Joey</option>
+                </select>
+                <input style="height: 30px; background-color:green;" id="route" type="submit" value="Submit">
+            </form>
+        </div>
     </div>
     <div>
-        <form>
-            <input type="submit" value="Submit">
+        <for>
+            </form>
+            <button id="passengerP" type="button" value="Submit">
         </form>
     </div>
     <!-- Load the Google Maps aPI -->
@@ -61,8 +68,6 @@
     <!-- All of the script for multiple requests -->
     <script type="text/javascript" src="js/routesMap.js"></script>
 
-    <!-- All of the script for multiple requests -->
-    <script type="text/javascript" src="js/durations.js"></script>
 
     <!-- <script type="text/javascript" src="js/continue.js"></script> -->
 
@@ -70,7 +75,7 @@
 
     <script type="text/javascript" src="js/driver.js"></script>
 
-    <script type="text/javascript" src="js/duration.js"></script>
+    <script type="text/javascript" src="js/login.js"></script>
 
 </body>
 

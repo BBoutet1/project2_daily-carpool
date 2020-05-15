@@ -27,28 +27,17 @@ module.exports = function(app) {
     app.get("/passenger", function(req, res) {
         res.sendFile(path.join(__dirname, "../public/Passenger.html"));
     });
-    //loads new pages added to help with storing and retreving user input data
-    app.get("/passengerReservation", function(req, res) {
-        res.sendFile(path.join(__dirname, "../public/passengerReservation.html"));
-    });
-    app.get("/driverList", function(req, res) {
-        res.sendFile(path.join(__dirname, "../public/driverList.html"));
-    });
 
     // authors route loads routesMap.html
     app.get("/map", function(req, res) {
         res.sendFile(path.join(__dirname, "../public/routesMap.html"));
     });
 
-    // authors route loads routesMap.html
-    app.get("/passenger-map", function(req, res) {
-        res.sendFile(path.join(__dirname, "../public/routesMapPassenger.html"));
-    });
 
 
     // authors route loads routesMap.html
-    app.get("/continue", function(req, res) {
-        res.sendFile(path.join(__dirname, "../public/continue.html"));
+    app.get("/login", function(req, res) {
+        res.sendFile(path.join(__dirname, "../public/login.html"));
     });
 
 };

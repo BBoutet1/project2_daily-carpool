@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in</title>
+    <link rel="stylesheet" href="css/foundation.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link type="text/css" rel="stylesheet" href="css/routesMap.css" />
+    <title>Document</title>
+</head>
+
+<body>
+    <nav class="top-bar topbar-responsive">
+        <div class="top-bar-title">
+            <span data-responsive-toggle="topbar-responsive" data-hide-for="medium">
+            <button class="menu-icon" type="button" data-toggle></button>
+          </span>
+            <a class="topbar-responsive-logo" href="#"><strong>DCC</strong></a>
+        </div>
+        <div id="topbar-responsive" class="topbar-responsive-links">
+            <div class="top-bar-right">
+                <ul class="menu simple vertical medium-horizontal">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Works</a></li>
+                    <li><a href="#">News</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li>
+                        <button type="button" class="button hollow topbar-responsive-button">Categories</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+    <!-- Somewhere in the DOM for the map to be rendered -->
+    <div id="map-canvas"></div>
+    <div id="right-panel">
+        <form id="continue-form" class="callout text-center" style="width: 95%;margin: 1%;">
+            <h5>Sign in</h5>
+            <div class="floated-label-wrapper">
+                <label for="full-name">Name</label>
+                <input type="text" id="userName" name="full name input" placeholder="Name">
+            </div>
+            <div class="floated-label-wrapper">
+                <label for="pass">Origin</label>
+                <input type="text" id="userOrigin" name="origin" placeholder="Origin">
+            </div>
+            <!-- <div class="floated-label-wrapper">
+            <label for="pass">Destination</label>
+            <input type="text" id="userDestination" name="origin" placeholder="Origin">
+        </div> -->
+            <div class="floated-label-wrapper">
+                <p style="float:left">User type</p>
+                <select id="userType" style=" width: 60%; ">
+                <option value="Driver">Driver</option>
+                <option value="Passenger">Passenger</option>
+              </select>
+            </div>
+            <input class="button button-rounded-hover4 " type="submit" value="Submit">
+        </form>
+        <h1 id="userName">
+        </h1>
+        <h3 id="userType"> You are a
+        </h3>
+        <table style="width:95%">
+            <tr>
+                <th>Name</th>
+                <th>Home address</th>
+                <th>Work address</th>
+            </tr>
+            <tr>
+                <td id="name"></td>
+                <td id="origin"></td>
+                <td id="dest"></td>
+            </tr>
+        </table>
+        <table style="width:95%">
+            <tr>
+                <th>Direct route duration</th>
+                <th>Detoured route duration</th>
+                <th>Detoured time</th>
+            </tr>
+            <tr>
+                <td id="directTime">0 houres 26 minutes</td>
+                <td id="detouredTime">0 hours 45 minutes</td>
+                <td id="difference">0 hours 19 minutes</td>
+            </tr>
+        </table>
+        <div style="width:95%">
+            <label for="list">Select a driver:</label>
+            <form style="float: left; width: 98%; height: 30px;" id="psgSelect">
+                <select style="float: left; width: 85%; height: 100%;" id="psgSelect">
+                <option value="">Brice</option>
+                <option value="">Bernard</option>
+                <option value="">Joey</option>
+                </select>
+                <input style="height: 30px; background-color:green;" id="route" type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+    <div>
+        <for>
+            </form>
+            <button id="passengerP" type="button" value="Submit">
+        </form>
+    </div>
+    <!-- Load the Google Maps aPI -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDE2yBUEZx3Cup_pwq22o_WferVgBpgSdE"></script>
+    <!-- All of the script for multiple requests -->
+    <script type="text/javascript" src="js/routesMap.js"></script>
+    <!-- <script type="text/javascript" src="js/continue.js"></script> -->
+    <script type="text/javascript" src="js/login.js"></script>
+     <script type="text/javascript" src="js/routesMap.js"></script>
+
+
+
+   
+    <script src="js/vendor/jquery.js "></script>
+    <script src="js/vendor/what-input.js "></script>
+    <script src="js/vendor/foundation.js "></script>
+    <script src="js/app.js "></script>
+
+
+
+</body>
+
+</html>
+
+</html>
