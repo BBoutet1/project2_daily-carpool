@@ -20,24 +20,16 @@ module.exports = function(app) {
 
     // index route loads view.html
     app.get("/driver", function(req, res) {
-        res.sendFile(path.join(__dirname, "../public/Driver.html"));
+        res.sendFile(path.join(__dirname, "../public/driver.html"));
     });
 
     // index route loads view.html
     app.get("/passenger", function(req, res) {
-        res.sendFile(path.join(__dirname, "../public/Passenger.html"));
+        res.sendFile(path.join(__dirname, "../public/passenger.html"));
     });
 
-    // authors route loads routesMap.html
-    app.get("/map", function(req, res) {
-        res.sendFile(path.join(__dirname, "../public/routesMap.html"));
+    // profile route loads route-profile.html
+    app.get("/profile", function(req, res) {
+        res.sendFile(path.join(__dirname, "../public/profile.html"));
     });
-
-
-
-    // authors route loads routesMap.html
-    app.get("/login", function(req, res) {
-        res.sendFile(path.join(__dirname, "../public/login.html"));
-    });
-
 };

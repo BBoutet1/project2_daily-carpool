@@ -27,14 +27,19 @@
         <div id="topbar-responsive" class="topbar-responsive-links">
             <div class="top-bar-right">
                 <ul class="menu simple vertical medium-horizontal">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Services</a></li>
-                    <li><a href="#">Works</a></li>
-                    <li><a href="#">News</a></li>
-                    <li><a href="#">Contact</a></li>
                     <li>
-                        <button type="button" class="button hollow topbar-responsive-button">Categories</button>
+                        <a href="http://localhost:8080/">Home</a></li>
+                    <li>
+                        <a href="http://localhost:8080/profile">Your profile</a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:8080/driver">Driver register</a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:8080/passenger">Passenger register</a>
+                    </li>
+                    <li>
+                        <button type="button " class="button hollow topbar-responsive-button ">Contact us</button>
                     </li>
                 </ul>
             </div>
@@ -46,7 +51,7 @@
     <!-- Somewhere in the DOM for the map to be rendered -->
     <div id="map-canvas"></div>
     <div id="right-panel">
-        <form id="continue-form" class="callout text-center" style="width: 95%;margin: 1%;">
+        <form id="signIn" class="callout text-center" style="width: 95%;margin: 1%;">
             <h5>Sign in</h5>
             <div class="floated-label-wrapper">
                 <label for="full-name">Name</label>
@@ -56,10 +61,6 @@
                 <label for="pass">Origin</label>
                 <input type="text" id="userOrigin" name="origin" placeholder="Origin">
             </div>
-            <!-- <div class="floated-label-wrapper">
-            <label for="pass">Destination</label>
-            <input type="text" id="userDestination" name="origin" placeholder="Origin">
-        </div> -->
             <div class="floated-label-wrapper">
                 <p style="float:left">User type</p>
                 <select id="userType" style=" width: 60%; ">
@@ -69,70 +70,64 @@
             </div>
             <input class="button button-rounded-hover4 " type="submit" value="Submit">
         </form>
-        <h1 id="userName">
-        </h1>
-        <h3 id="userType"> You are a
-        </h3>
-        <table style="width:95%">
-            <tr>
-                <th>Name</th>
-                <th>Home address</th>
-                <th>Work address</th>
-            </tr>
-            <tr>
-                <td id="name"></td>
-                <td id="origin"></td>
-                <td id="dest"></td>
-            </tr>
-        </table>
-        <table style="width:95%">
-            <tr>
-                <th>Direct route duration</th>
-                <th>Detoured route duration</th>
-                <th>Detoured time</th>
-            </tr>
-            <tr>
-                <td id="directTime">0 houres 26 minutes</td>
-                <td id="detouredTime">0 hours 45 minutes</td>
-                <td id="difference">0 hours 19 minutes</td>
-            </tr>
-        </table>
-        <div style="width:95%">
-            <label for="list">Select a driver:</label>
-            <form style="float: left; width: 98%; height: 30px;" id="psgSelect">
-                <select style="float: left; width: 85%; height: 100%;" id="psgSelect">
+        <main class="profile">
+            <h1 id="welcome" style="width:95%">
+            </h1>
+            <h5 id="yourRoute" style="width:95%; padding-left: 20px; color: darkblue;">
+                Manage your route...
+            </h5>
+            <table style="width:95%">
+                <tr>
+                    <th>Home address</th>
+                    <th>Work address</th>
+                </tr>
+                <tr>
+                    <td id="origin"></td>
+                    <td id="dest"></td>
+                </tr>
+            </table>
+            <table style="width:95%">
+                <tr>
+                    <th>Direct route duration</th>
+                    <th>Detoured route duration</th>
+                    <th>Detour time</th>
+                </tr>
+                <tr>
+                    <td id="directTime">0 hours 26 minutes</td>
+                    <td id="detouredTime">0 hours 45 minutes</td>
+                    <td id="difference">0 hours 19 minutes</td>
+                </tr>
+            </table>
+            <div style="width:95%">
+                <label for="list">Select a driver:</label>
+                <form style="float: left; width: 98%; height: 30px;" id="psgSelect">
+                    <select style="float: left; width: 85%; height: 100%;" id="psgSelect">
                 <option value="">Brice</option>
                 <option value="">Bernard</option>
                 <option value="">Joey</option>
                 </select>
-                <input style="height: 30px; background-color:green;" id="route" type="submit" value="Submit">
-            </form>
-        </div>
+                    <input style="height: 30px; background-color:green;" id="route" type="submit" value="Submit">
+                </form>
+            </div>
+            <div>
+                <form>
+                    <button id="passengerP" type="button" value="Submit">
+                </form>
+            </div>
+        </main>
     </div>
-    <div>
-        <for>
-            </form>
-            <button id="passengerP" type="button" value="Submit">
-        </form>
-    </div>
+
     <!-- Load the Google Maps aPI -->
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDE2yBUEZx3Cup_pwq22o_WferVgBpgSdE"></script>
     <!-- All of the script for multiple requests -->
     <script type="text/javascript" src="js/routesMap.js"></script>
     <!-- <script type="text/javascript" src="js/continue.js"></script> -->
-    <script type="text/javascript" src="js/login.js"></script>
-     <script type="text/javascript" src="js/routesMap.js"></script>
-
-
-
-   
+    <script type="text/javascript" src="js/profile.js"></script>
+    <script type="text/javascript" src="js/routesMap.js"></script>
     <script src="js/vendor/jquery.js "></script>
     <script src="js/vendor/what-input.js "></script>
     <script src="js/vendor/foundation.js "></script>
     <script src="js/app.js "></script>
-
-
-
 </body>
 
 </html>
