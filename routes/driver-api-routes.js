@@ -12,12 +12,46 @@ var db = require("../models");
 // =============================================================
 module.exports = function(app) {
 
-    // GET route for getting all of the posts
+    // GET route for getting all of the drivers
     app.get("/api/drivers", function(req, res) {
         var query = {};
         if (req.query.driver_id) {
             query.DriverId = req.query.driver_id;
         }
+        //Distance calculation
+        //*****************************/
+        //let query = {};
+        // let origin = req.query.homeAddress;
+        // console.log(origin)
+        // let destination = req.query.workAddress;
+        // let APIkey = AIzaSyDE2yBUEZx3Cup_pwq22o_WferVgBpgSdE;
+        // let queryURL = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" +
+        //     origin + "&destinations=" + destination + "&mode=driving&key=" + APIkey;
+
+        // $.ajax({
+        //         url: queryURL,
+        //         method: "GET"
+        //     })
+        //     .then(function(response) {
+        //         for (let i = 0; i < response.length; i++) {
+        //             userName = response[i].name;
+        //             userOrigin = response[i].homeAddress;
+        //             userDestination = response[i].workAddress;
+        //             userType = response[i].type;
+        //             if (inputName == userName && inputOrigin == userOrigin && inputType == userType) {
+        //                 isUser = true;
+        //                 $("#welcome").html("Welcome " + userName + "!");
+        //                 $("#origin").html(userOrigin);
+        //                 $("#dest").html(userDestination);
+        //                 $("#signIn").css("display", "none")
+        //                 $(".profile").css("display", "block")
+        //             }
+        //         }
+
+        //     })
+
+
+        //********************************** */
         // Here we add an "include" property to our options in our findAll query
         // We set the value to an array of the models we want to include in a left outer join
         // In this case, just db.Author
