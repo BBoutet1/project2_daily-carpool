@@ -1,18 +1,17 @@
 $(document).ready(function() {
 
 
-    $("#continue-form").on("submit", displayUser);
+    $("#signIn").on("submit", displayUser);
 
     function displayUser(event) {
         event.preventDefault();
-
-
         const inputName = $("#userName").val().trim();
         const inputOrigin = $("#userOrigin").val().trim();
         const inputType = $("#userType option:selected").val();
 
         let userName = "";
         let userOrigin = "";
+        let userDestination = "";
         let userType = "";
 
         let isUser = false;
@@ -34,39 +33,20 @@ $(document).ready(function() {
                     console.log(isUser + " start")
                     userName = response[i].name;
                     userOrigin = response[i].homeAddress;
+                    userDestination = response[i].workAddress;
                     userType = response[i].type;
-                    console.log(inputName, inputOrigin, inputType)
-                    console.log(userName, userOrigin, userType)
-                    console.log(inputName == userName)
-                    console.log(inputOrigin == userOrigin)
-                    console.log(inputType == userType)
+
+
                     if (inputName == userName && inputOrigin == userOrigin && inputType == userType) {
-                        console.log(isUser + " become")
-                        $("#name").html(userName);
-                        $("#origin").html(userOrigin);
-                        $("#dest").html(response[2].workAddress);
-                        $("#userType").html("You are a " + userType);
                         isUser = true;
+                        $("#welcome").html("Welcome " + userName + "!");
+                        $("#origin").html(userOrigin);
+                        $("#dest").html(userDestination);
+                        $("#signIn").css("display", "none")
+                        $(".profile").css("display", "block")
                     }
                 }
-                // Building URL to query current the 5 days forcast database
 
-
-                //$("#output").html(response[2].workAddress);
-                //  let checked = ""
-                //  $("input:checked").val()
-                //  "";
-                //  $("input").on("click", function() {
-                //      // access properties using this keyword
-                //      let checked = $("input:checked").val();
-                //      console.log(checked)
-                //      if (checked == "passenger1") {
-                //          $("#poolTime").html(response.poolDuraction);
-                //          $("#difference").html(response.timeDifference);
-                //      } else {
-                //          $("#poolTime").html("No selection");
-                //          $("#difference").html("No selection");
-                //      }
             }).then(function() {
                 console.log(isUser + " Conclude")
                 if (!isUser) {
@@ -77,8 +57,4 @@ $(document).ready(function() {
 
     }
 
-
-
-    //  });
-    //  });       
 });

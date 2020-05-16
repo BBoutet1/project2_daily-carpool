@@ -46,7 +46,6 @@ module.exports = function(app) {
 
     // POST route for saving a new post
     app.post("/api/drivers", function(req, res) {
-        console.log("papa")
         db.Driver.create(req.body).then(function(dbDriver) {
             res.json(dbDriver);
         });
