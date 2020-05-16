@@ -6,13 +6,14 @@ https://developers.google.com/maps/documentation/javascript/examples/distance-ma
 
 Api Key with multiple origine and destinations
 
-https://maps.googleapis.com/maps/api/distancematrix/json?origins=Vancouver+BC|Seattle&destinations=San+Francisco|Victoria+BC&mode=bicycling&language=fr-FR&key=YOUR_API_KEY
+https://maps.googleapis.com/maps/api/distancematrix/json?origins=Vancouver+BC|Seattle&destinations=San+Francisco|Victoria+BC&mode=bicycling&key=AIzaSyDE2yBUEZx3Cup_pwq22o_WferVgBpgSdE
 
 
 Api key with destination and waypoints
 
-https://maps.googleapis.com/maps/api/directions/json?origin=Boston,MA&destination=Concord,MA&waypoints=Charlestown,MA|Lexington,MA
+https://maps.googleapis.com/maps/api/directions/json?origin=Boston,MA&destination=Concord,MA&waypoints=Charlestown,MA|Lexington,MA&key=AIzaSyDE2yBUEZx3Cup_pwq22o_WferVgBpgSdE
 
+API
 
 browserify is a "require" for browser
 
