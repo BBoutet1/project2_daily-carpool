@@ -1,9 +1,11 @@
 $(document).ready(function() {
     // Getting references to the name input and passenger container, as well as the table body
-    var passengerName = "";
-    // var passengerEmail = $("#email");
-    var passengerOrigin = "";
-    var passengerDestination = "";
+    firstName = $("#firstName");
+    lastName = $("#lastName");
+    userName = $("#userName");
+    driverOrigin = $("#origin");
+    driverDestination = $("#destination");
+    let userAccepted = true;
 
     // Adding event listeners to the form to create a new object, and the button to delete
     // an Passenger
@@ -17,22 +19,56 @@ $(document).ready(function() {
     function handlePassengerFormSubmit(event) {
         event.preventDefault();
         // Getting references to the name input and passenger container, as well as the table body
-        passengerName = $("#name");
-        // var passengerEmail = $("#email");
-        passengerOrigin = $("#origin");
-        passengerDestination = $("#destination");
+        firstName = $("#firstName").val().trim();
+        lastName = $("#lastName").val().trim();
+        userName = $("#userName").val().trim();
+        driverOrigin = $("#origin").val().trim();
+        driverDestination = $("#destination").val().trim();
+
         // Don't do anything if the name fields hasn't been filled out
-        if (!passengerName.val().trim() || !passengerOrigin.val().trim() || !passengerDestination.val().trim()) {
+        if (!firstName || !lastName || !userName || !driverOrigin || !driverDestination) {
+            alert("Form not completed. Please fill up the form!")
             return;
         }
-        // Calling the upsertPassenger function and passing in values of passenger parameters
-        upsertPassenger({
-            name: passengerName.val().trim(),
-            homeAddress: passengerOrigin.val().trim(),
-            workAddress: passengerDestination.val().trim(),
-            type: "Passenger"
-        });
+
+        let queryURL = "http://localhost:8080/api/passengers";
+        $.ajax({
+                url: queryURL,
+                method: "GET"
+            })
+            .then(function(response) {
+                console.log(response)
+                for (let i = 0; i < response.length; i++) {
+                    let presentUser = response[i].userName;
+                    console.log(response[i].userName)
+                    if (userName == presentUser) {
+                        userAccepted = false;
+                    }
+                }
+            }).then(function(response) { //Don't register if the user name already exist
+                if (!userAccepted) {
+                    console.log(userAccepted)
+                    alert("User name " + userName + " already exist. Register with another user name");
+                    return;
+                }
+
+                // Calling the upsertDriver function and passing in values of driver parameters
+                upsertPassenger({
+                    firstName: firstName,
+                    lastName: lastName,
+                    userName: userName,
+                    homeAddress: driverOrigin,
+                    workAddress: driverDestination,
+                    waypoints: "",
+                    directDuration: 0,
+                    poolDuraction: 0,
+                    timeDifference: 0,
+                    type: "Driver"
+                });
+                alert("Passenger profile created for " + firstName + " " + lastName + ". Record your user name: " + userName)
+            });
     }
+
 
     // A function for creating an passenger. Calls getPassengers upon completion
     function upsertPassenger(passengerData) {
