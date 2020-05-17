@@ -78,3 +78,24 @@ next();
 
 
 Register (HTML)--->DB-->API--->MAP(HTML)-->DB--API-HTML(new route)
+
+
+   function durationNdistance(result) {
+                            let distance = 0; //distance
+                            let time = 0; //duration in secondes
+                            let duration = ""; //duration in hours and minutes
+                            let route = result.routes[0];
+                            for (var i = 0; i < route.legs.length; i++) {
+                                distance += myroute.legs[i].distance.value;
+                                durationS += myroute.legs[i].duration.value;
+                                console.log(distance)
+                            }
+                            distance = distance / 1000;
+                            // Converting seconds in hours and minutes
+                            let hours = Math.floor(time / 3600);
+                            let minutes = Math.round((time % 3600) / 60);
+                            let duration = hours + " h " + minutes + " min";
+
+                            waypts.push(duration);
+                            waypts.push(duration);
+                        }

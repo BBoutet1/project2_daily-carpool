@@ -3,22 +3,21 @@ $(document).ready(function() {
     var num, map, data, bounds;
     var requestArray = [],
         renderArray = [];
+
+
+
     $("#signIn").on("submit", displayUser);
-    // Initialise some variables
-    // A JSON Array containing some people/routes and the destinations/stops
-
-
     var routesArray = {}
+
+
 
     function displayUser(event) {
         event.preventDefault();
-        const inputName = $("#userName").val().trim();
-        const inputOrigin = $("#userOrigin").val().trim();
-        const inputType = $("#userType option:selected").val();
+        const inputFname = $("#firstName").val().trim();
+        const inputUname = $("#userName").val().trim();
 
-        let userName = "";
-        let userOrigin = "";
-        let userDestination = "";
+        let userFname = "";
+        let userUname = "";
         let userType = "";
 
         let isUser = false;
@@ -36,20 +35,14 @@ $(document).ready(function() {
             })
             .then(function(response) {
                 for (let i = 0; i < response.length; i++) {
-                    console.log(i)
-                    console.log(isUser + " start")
-                    userName = response[i].name;
+                    userFname = response[i].firstName;
                     userOrigin = response[i].homeAddress;
                     userDestination = response[i].workAddress;
                     userType = response[i].type;
 
-
-                    // A JSON Array containing some people/routes and the destinations/stops
-
-                    var routesArray = {}
-
-
-
+                    let routesArray = {}; //User and potential assossiate routes;
+                    let routesDurations = []; // Array of routes durations;
+                    let routesDistances = []; // Array of routes distances;
 
                     // Standard Colours for navigation polylines
                     var routeColor = ['maroon', 'purple', 'aqua', 'red', 'green', 'silver', 'olive', 'blue', 'yellow', 'teal'];
@@ -163,9 +156,8 @@ $(document).ready(function() {
                                 // zoom and center the map to show all the routes
                                 map.fitBounds(bounds);
 
-
+                                durationNdistance(result);
                             }
-
                         }
 
                         function nextRequest() {
@@ -179,13 +171,36 @@ $(document).ready(function() {
                             // Submit another request
                             submitRequest();
                         }
-
                         // This request is just to kick start the whole process
                         submitRequest();
                     }
 
-                    if (inputName == userName && inputOrigin == userOrigin && inputType == userType) {
+                    function durationNdistance(result) {
+                        let distance = 0; //distance
+                        let time = 0; //duration in secondes
+                        let duration = ""; //duration in hours and minutes
+                        let route = result.routes[0];
+                        console.log(route)
+                        for (var i = 0; i < route.legs.length; i++) {
+                            distance += route.legs[i].distance.value;
+                            time += route.legs[i].duration.value;
+                            console.log(distance)
+                        }
+                        distance = distance / 1000;
+                        // Converting seconds in hours and minutes
+                        let hours = Math.floor(time / 3600);
+                        let minutes = Math.round((time % 3600) / 60);
+                        duration = hours + " h " + minutes + " min";
+
+                        routesDurations.push(duration);
+                        routesDistances.push(distance);
+                        console.log(distance, duration)
+                    }
+
+                    if (inputFname == userFname && inputUname == userUname && inputType == userType) {
                         routesArray.userRoute = [userOrigin, userDestination]
+                        console.log(routesArray)
+
                         isUser = true;
                         $("#welcome").html("Welcome " + userName + "!");
                         $("#yourRoute").html("Manage your " + userType + " route...");
