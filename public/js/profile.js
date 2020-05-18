@@ -20,12 +20,11 @@ $(document).ready(function() {
 
         let isUser = false;
 
-        let apiType = "";
-        if (iputRype = "Driver") {
-            apiType = "drivers"
-        } else { apiType = "passagers" }
-
-        let queryURL = "http://localhost:8080/api/" + apiType;
+        if (inputType == "Driver") {
+            queryURL = "http://localhost:8080/api/drivers"
+        } else {
+            queryURL = "http://localhost:8080/api/passengers"
+        }
 
         $.ajax({
                 url: queryURL,
