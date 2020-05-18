@@ -19,14 +19,14 @@ $(document).ready(function() {
     function handlePassengerFormSubmit(event) {
         event.preventDefault();
         // Getting references to the name input and passenger container, as well as the table body
-        firstName = $("#firstName").val().trim();
-        lastName = $("#lastName").val().trim();
-        userName = $("#userName").val().trim();
-        driverOrigin = $("#origin").val().trim();
-        driverDestination = $("#destination").val().trim();
+        firstName = $("#firstName");
+        lastName = $("#lastName");
+        userName = $("#userName");
+        driverOrigin = $("#origin");
+        driverDestination = $("#destination");
 
         // Don't do anything if the name fields hasn't been filled out
-        if (!firstName || !lastName || !userName || !driverOrigin || !driverDestination) {
+        if (!firstName.val().trim() || !lastName.val().trim() || !userName.val().trim() || !driverOrigin.val().trim() || !driverDestination.val().trim()) {
             alert("Form not completed. Please fill up the form!")
             return;
         }
@@ -37,42 +37,37 @@ $(document).ready(function() {
                 method: "GET"
             })
             .then(function(response) {
-                console.log(response)
                 for (let i = 0; i < response.length; i++) {
-                    let presentUser = response[i].userName;
-                    console.log(response[i].userName)
-                    if (userName == presentUser) {
-                        userAccepted = false;
+                    console.log(i, userName.val().trim(), response[i].userName)
+                    console.log(userName.val().trim() == response[i].userName)
+                    if (userName.val().trim() == response[i].userName) {
+                        console.log("Forloop break at i = " + i + "of" + response.length)
+                        alert("User name " + userName.val().trim() + " already exist. Register with another user name");
+                        return;
                     }
                 }
-            }).then(function(response) { //Don't register if the user name already exist
-                if (!userAccepted) {
-                    console.log(userAccepted)
-                    alert("User name " + userName + " already exist. Register with another user name");
-                    return;
-                }
-
                 // Calling the upsertDriver function and passing in values of driver parameters
                 upsertPassenger({
-                    firstName: firstName,
-                    lastName: lastName,
-                    userName: userName,
-                    homeAddress: driverOrigin,
-                    workAddress: driverDestination,
+                    firstName: firstName.val().trim(),
+                    lastName: lastName.val().trim(),
+                    userName: userName.val().trim(),
+                    homeAddress: driverOrigin.val().trim(),
+                    workAddress: driverDestination.val().trim(),
                     waypoints: "",
                     directDuration: 0,
                     poolDuraction: 0,
                     timeDifference: 0,
                     type: "Driver"
                 });
-                alert("Passenger profile created for " + firstName + " " + lastName + ". Record your user name: " + userName)
-            });
+                alert("Passenger profile created for " + firstName.val().trim() + " " + lastName.val().trim() + ". Do not forget to record your user name: " + userName.val().trim())
+
+            })
     }
 
 
     // A function for creating an passenger. Calls getPassengers upon completion
     function upsertPassenger(passengerData) {
-        console.log(passengerData)
+        console.log(passengerData.firstName)
         $.post("/api/passengers", passengerData)
             .then(getPassengers);
     }

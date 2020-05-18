@@ -4,20 +4,18 @@ $(document).ready(function() {
     var requestArray = [],
         renderArray = [];
 
-
-
     $("#signIn").on("submit", displayUser);
     var routesArray = {}
-
-
 
     function displayUser(event) {
         event.preventDefault();
         const inputFname = $("#firstName").val().trim();
         const inputUname = $("#userName").val().trim();
-
+        const inputType = $("#userType option:selected").val();
+        console.log(inputType)
+        console.log(inputFname, inputUname)
         let userFname = "";
-        let userUname = "";
+        let userLname = "";
         let userType = "";
 
         let isUser = false;
@@ -34,24 +32,45 @@ $(document).ready(function() {
                 method: "GET"
             })
             .then(function(response) {
+
+                let routesArray = {}; //User and potential assossiate routes;
+                let routesDurations = {}; // Array of routes durations;
+                let routesDistances = {}; // Array of routes distances;
+
                 for (let i = 0; i < response.length; i++) {
                     userFname = response[i].firstName;
+                    userLname = response[i].lastName;
                     userOrigin = response[i].homeAddress;
                     userDestination = response[i].workAddress;
-                    userType = response[i].type;
+                    console.log(i, userOrigin, userDestination)
 
-                    let routesArray = {}; //User and potential assossiate routes;
-                    let routesDurations = []; // Array of routes durations;
-                    let routesDistances = []; // Array of routes distances;
+                    userType = response[i].type;
 
                     // Standard Colours for navigation polylines
                     var routeColor = ['maroon', 'purple', 'aqua', 'red', 'green', 'silver', 'olive', 'blue', 'yellow', 'teal'];
 
+                    console.log(inputFname == userFname, inputFname == userFname, inputType == userType)
+                    console.log(inputFname, userFname, inputFname, userFname, inputType, userType)
+
+                    if (inputFname == userFname && inputFname == userFname && inputType == userType) {
+                        routesArray.directRoute = [userOrigin, userDestination]
+                        console.log(routesArray)
+
+                        isUser = true;
+                        $("#welcome").html("Welcome " + userFname + " " + userLname + "!");
+                        $("#yourRoute").html("Manage your " + userType + " route...");
+                        $("#saveType").html(userType); //used in routeMap.js calculation
+                        $("#origin").html(userOrigin);
+                        $("#dest").html(userDestination);
+                        $("#signIn").css("display", "none");
+                        $(".profile").css("display", "block")
+                        generateRequests()
+                        break;
+                    }
+
                     // Let's make an array of requests which will become individual polylines on the map.
                     function generateRequests() {
-
                         requestArray = [];
-
                         for (var route in routesArray) {
                             // This now deals with one of the people / routes
 
@@ -175,6 +194,7 @@ $(document).ready(function() {
                         submitRequest();
                     }
 
+                    // A function to calculate distanes et duration
                     function durationNdistance(result) {
                         let distance = 0; //distance
                         let time = 0; //duration in secondes
@@ -184,35 +204,21 @@ $(document).ready(function() {
                         for (var i = 0; i < route.legs.length; i++) {
                             distance += route.legs[i].distance.value;
                             time += route.legs[i].duration.value;
-                            console.log(distance)
+
                         }
-                        distance = distance / 1000;
+                        distance = (distance / 1000).toFixed(1);
                         // Converting seconds in hours and minutes
                         let hours = Math.floor(time / 3600);
                         let minutes = Math.round((time % 3600) / 60);
                         duration = hours + " h " + minutes + " min";
 
-                        routesDurations.push(duration);
-                        routesDistances.push(distance);
-                        console.log(distance, duration)
-                    }
+                        routesDurations.directDuration = [time, duration];
+                        routesDistances.directDistance = distance;
 
-                    if (inputFname == userFname && inputUname == userUname && inputType == userType) {
-                        routesArray.userRoute = [userOrigin, userDestination]
-                        console.log(routesArray)
-
-                        isUser = true;
-                        $("#welcome").html("Welcome " + userName + "!");
-                        $("#yourRoute").html("Manage your " + userType + " route...");
-                        $("#saveType").html(userType); //used in routeMap.js calculation
-                        $("#origin").html(userOrigin);
-                        $("#dest").html(userDestination);
-                        $("#signIn").css("display", "none");
-                        $(".profile").css("display", "block")
-                        generateRequests()
+                        $("#directTime").html(duration);
+                        $("#directDistance").html(distance + " km");
                     }
                 }
-
             }).then(function() {
                 console.log(isUser + " Conclude")
                 if (!isUser) {
@@ -225,7 +231,7 @@ $(document).ready(function() {
     // Called Onload
     function init() {
 
-        // Some basic map setup (from the API docs)
+        // Th map initialized in Toroto
         var mapOptions = {
             center: new google.maps.LatLng(43.651070, -79.347015),
             zoom: 10,
