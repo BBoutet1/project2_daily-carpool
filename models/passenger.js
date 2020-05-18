@@ -1,7 +1,7 @@
 module.exports = function(sequelize, DataTypes) {
     var Passenger = sequelize.define("Passenger", {
         // Giving the Driver model a name of type STRING
-        fistName: DataTypes.STRING,
+        firstName: DataTypes.STRING,
         lastName: DataTypes.STRING,
         userName: DataTypes.STRING,
         homeAddress: DataTypes.STRING,

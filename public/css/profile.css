@@ -59,8 +59,12 @@
       margin-bottom: 20px;
   }
   
+  #origin,
+  #dest,
   #directTime,
+  #directDistance,
   #detouredTime,
+  #detouredDistance,
   #difference {
       color: blue
   }

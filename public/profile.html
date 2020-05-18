@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="css/foundation.css">
     <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link type="text/css" rel="stylesheet" href="css/routesMap.css" />
+    <link type="text/css" rel="stylesheet" href="css/profile.css" />
     <title>Document</title>
 </head>
 
@@ -46,20 +46,21 @@
         </div>
     </nav>
 
-
-
     <!-- Somewhere in the DOM for the map to be rendered -->
     <div id="map-canvas"></div>
+
+    <!-- User and routes informations -->
     <div id="right-panel">
+        <!-- User sign in form -->
         <form id="signIn" class="callout text-center" style="width: 95%;margin: 1%;">
             <h5>Sign in</h5>
             <div class="floated-label-wrapper">
                 <label for="full-name">First Name</label>
-                <input type="text" id="fName" name="First name" placeholder="First name">
+                <input type="text" id="firstName" name="First name" placeholder="First name">
             </div>
             <div class="floated-label-wrapper">
                 <label for="pass">User name</label>
-                <input type="text" id="uName" name="User name" placeholder="User name">
+                <input type="text" id="userName" name="User name" placeholder="User name">
             </div>
             <div class="floated-label-wrapper">
                 <p style="float:left">User type</p>
@@ -70,11 +71,12 @@
             </div>
             <input class="button button-rounded-hover4 " type="submit" value="Submit">
         </form>
+        <!-- User info an routes display -->
         <main class="profile">
-            <h1 id="welcome" style="width:95%">
-            </h1>
+            <h3 id="welcome" style="width:95%">
+            </h3>
             <p id="saveType" style="display: none;"> </p>
-            <h5 id="yourRoute" style="width:95%; padding-left: 20px; color: darkblue;">
+            <h5 id="yourRoute" style="width:95%; padding-left: 10px; color: darkblue;">
                 Manage your route...
             </h5>
             <table style="width:95%">
@@ -89,14 +91,24 @@
             </table>
             <table style="width:95%">
                 <tr>
-                    <th>Direct route duration</th>
-                    <th>Detoured route duration</th>
-                    <th>Detour time</th>
+                    <th>Direct distance</th>
+                    <th>Direct duration</th>
                 </tr>
                 <tr>
-                    <td id="directTime">0 hours 26 minutes</td>
-                    <td id="detouredTime">0 hours 45 minutes</td>
-                    <td id="difference">0 hours 19 minutes</td>
+                    <td id="directDistance"></td>
+                    <td id="directTime"></td>
+                </tr>
+            </table>
+            <table style="width:95%">
+                <tr>
+                    <th>Detoured distance</th>
+                    <th>Detoured duration</th>
+                    <th>Time difference</th>
+                </tr>
+                <tr>
+                    <td id="detouredDistance">No selection</td>
+                    <td id="detouredTime">No selection</td>
+                    <td id="difference">No selection</td>
                 </tr>
             </table>
             <div style="width:95%">
