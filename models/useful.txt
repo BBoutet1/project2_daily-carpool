@@ -99,3 +99,75 @@ Register (HTML)--->DB-->API--->MAP(HTML)-->DB--API-HTML(new route)
                             waypts.push(duration);
                             waypts.push(duration);
                         }
+
+
+
+
+
+
+                         $("#signIn").on("click", displayUser);
+
+    function displayUser(event) {
+        event.preventDefault();
+        let directionsService = new google.maps.DirectionsService();
+        let num, map, data, bounds;
+        let requestArray = [],
+            renderArray = [];
+
+        let inputFname = $("#firstName").val().trim();
+        let inputType = $("#userType option:selected").val();
+        let userFname = "";
+        let userLname = "";
+        let userType = "";
+
+        let isUser = false;
+
+        let queryURL = "";
+
+
+
+        if (inputType == "Driver") {
+            queryURL = "http://localhost:8080/api/drivers"
+        } else {
+            queryURL = "http://localhost:8080/api/passengers"
+        }
+------------------------------------------------------------------------------------------------------------------
+if (userType = "Passenger") { pickPassenger() } else { pickDriver() }
+
+                        generateRequests()
+                        break;
+                    }
+                    // For a Driver user make route with each available passenger
+                    function pickPassenger() {
+                        let queryURL2 = "http://localhost:8080/api/passengers"
+                        $.ajax({
+                                url: queryURL,
+                                method: "GET"
+                            })
+                            .then(function(response2) {
+                                for (let i = 0; i < response2.length; i++) {
+                                    let passengerRoute = [response2[i].homeAddress, response2[i].workAddress]
+                                    passengerRoute.splice(1, 0, userOrigin, userDestination);
+                                    routesArray["derouted" + i] = passengerRoute;
+                                    console.log(routesArray);
+                                }
+                            });
+                    }
+
+                    // For a Passenger user make route with each available driver
+                    function pickDriver() {
+                        let queryURL2 = "http://localhost:8080/api/drivers"
+
+                        $.ajax({
+                                url: queryURL,
+                                method: "GET"
+                            })
+                            .then(function(response2) {
+                                for (let i = 0; i < response2.length; i++) {
+                                    let passengerRoute = [userOrigin, userDestination]
+                                    passengerRoute.splice(1, 0, response2[i].homeAddress, response2[i].workAddress);
+                                    routesArray["derouted" + i] = passengerRoute;
+                                }
+                            });
+                    }
+
