@@ -1,19 +1,16 @@
 $(document).ready(function() {
-    var directionsService = new google.maps.DirectionsService();
-    var num, map, data, bounds;
-    var requestArray = [],
+    let directionsService = new google.maps.DirectionsService();
+    let map, data, bounds;
+    let requestArray = [],
         renderArray = [];
 
     $("#signIn").on("submit", displayUser);
-    var routesArray = {}
 
     function displayUser(event) {
         event.preventDefault();
         const inputFname = $("#firstName").val().trim();
         const inputUname = $("#userName").val().trim();
         const inputType = $("#userType option:selected").val();
-        console.log(inputType)
-        console.log(inputFname, inputUname)
         let userFname = "";
         let userLname = "";
         let userType = "";
@@ -22,8 +19,10 @@ $(document).ready(function() {
 
         if (inputType == "Driver") {
             queryURL = "http://localhost:8080/api/drivers"
+            queryURL2 = "http://localhost:8080/api/passengers"
         } else {
             queryURL = "http://localhost:8080/api/passengers"
+            queryURL2 = "http://localhost:8080/api/drivers"
         }
 
         $.ajax({
@@ -62,9 +61,56 @@ $(document).ready(function() {
                         $("#origin").html(userOrigin);
                         $("#dest").html(userDestination);
                         $("#signIn").css("display", "none");
-                        $(".profile").css("display", "block")
+                        $(".profile").css("display", "block");
+
+                        // Make list with altrnative routes with available passengers
+                        if (userType = "Passenger") {
+                            passengerOption()
+                            console.log("I am passenger")
+                        } else {
+                            driverOption()
+                            console.log("I am driver")
+                        }
+
+
                         generateRequests()
                         break;
+                    }
+
+                    // For a Driver user make route with each available passenger
+                    function passengerOption() {
+                        $.ajax({
+                                url: queryURL2,
+                                method: "GET"
+                            })
+                            .then(function(response2) {
+                                for (let i = 0; i < response2.length; i++) {
+                                    let passengerRoute = [response2[i].homeAddress, response2[i].workAddress]
+                                    passengerRoute.splice(1, 0, userOrigin, userDestination);
+                                    routesArray["derouted" + i] = passengerRoute;
+                                    let option = "<option value=\"" + response2[i].id + "\">" + response2[i].id + " | " + response2[i].firstName + " " + response2[i].lastName + " </option>";
+                                    $("#select").append(option);
+                                    console.log(option);
+                                }
+                            });
+                    }
+
+                    // For a Passenger user make route with each available driver
+                    function driverOption() {
+                        $.ajax({
+                                url: queryURL2,
+                                method: "GET"
+                            })
+                            .then(function(response2) {
+                                for (let i = 0; i < response2.length; i++) {
+                                    let passengerRoute = [userOrigin, userDestination]
+                                    passengerRoute.splice(1, 0, response3[i].homeAddress, response3[i].workAddress);
+                                    routesArray["derouted" + i] = passengerRoute;
+                                    let option = "<option value=\"" + response3[i].id + "\">" + response3[i].id + " | " + response3[i].firstName + " " + response3[i].lastName + " </option>";
+                                    $("#selct").append(option);
+                                    console.log(option);
+                                }
+                            });
                     }
 
                     // Let's make an array of requests which will become individual polylines on the map.
