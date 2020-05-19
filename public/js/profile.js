@@ -1,20 +1,45 @@
 $(document).ready(function() {
+
+    //Google map API request parameter variables
     let directionsService = new google.maps.DirectionsService();
     let map, data, bounds;
     let requestArray = [],
         renderArray = [];
 
+
+    let routesArray = {}; //User and routes;
+    let routesOptions = {} // routes in options with a passenger or driver
+    let routesDurations = {}; // Array of routes durations;
+    let routesDistances = {}; // Array of routes distances;
+
+
+    let queryURL = ""; //User API url
+    let queryURL2 = ""; // API to get potential associate
+
+    //Login data
+    let inputFname = "";
+    let inputUname = "";
+    let inputType = "";
+
+    //Signing in user data
+    let userFname = "";
+    let userLname = "";
+    let userType = "";
+
+    //True if the signing in user is found
+    let isUser = false;
+
+    //Finding the user data and processing
     $("#signIn").on("submit", displayUser);
 
     function displayUser(event) {
         event.preventDefault();
-        let inputFname = $("#firstName").val().trim();
-        let inputUname = $("#userName").val().trim();
-        let inputType = $("#userType option:selected").val();
-        let userFname = "";
-        let userLname = "";
-        let userType = "";
-        let isUser = false;
+
+        inputFname = $("#firstName").val().trim();
+        inputUname = $("#userName").val().trim();
+        inputType = $("#userType option:selected").val();
+
+
         if (inputType == "Driver") {
             queryURL = "http://localhost:8080/api/drivers"
             queryURL2 = "http://localhost:8080/api/passengers"
@@ -29,9 +54,6 @@ $(document).ready(function() {
             })
             .then(function(response) {
 
-                let routesArray = {}; //User and potential assossiate routes;
-                let routesDurations = {}; // Array of routes durations;
-                let routesDistances = {}; // Array of routes distances;
                 for (let i = 0; i < response.length; i++) {
                     userFname = response[i].firstName;
                     userLname = response[i].lastName;
@@ -60,7 +82,8 @@ $(document).ready(function() {
                         $(".profile").css("display", "block");
 
 
-                        routesArray.directRoute = [userOrigin, userDestination]
+                        routesArray.directRoute = [userOrigin, userDestination] // displayed routes 
+                        routesOptions.directRoute = [userOrigin, userDestination] // options availables
 
                         // Make list with altrnative routes with available passengers
                         if (userType = "Passenger") {
@@ -82,10 +105,10 @@ $(document).ready(function() {
                                 for (let i = 0; i < response2.length; i++) {
                                     let passengerRoute = [response2[i].homeAddress, response2[i].workAddress]
                                     passengerRoute.splice(1, 0, userOrigin, userDestination);
-                                    routesArray["derouted" + i] = passengerRoute;
+                                    routesOptions["derouted" + i] = passengerRoute;
                                     let option = "<option value=\"" + response2[i].id + "\">" + response2[i].id + " | " + response2[i].firstName + " " + response2[i].lastName + " </option>";
                                     $("#select").append(option);
-                                    console.log(option);
+                                    console.log(routesOptions["derouted" + i])
                                 }
                             });
                     }
@@ -100,10 +123,10 @@ $(document).ready(function() {
                                 for (let i = 0; i < response2.length; i++) {
                                     let passengerRoute = [userOrigin, userDestination]
                                     passengerRoute.splice(1, 0, response3[i].homeAddress, response3[i].workAddress);
-                                    routesArray["derouted" + i] = passengerRoute;
+                                    routesOptions["derouted" + i] = passengerRoute;
                                     let option = "<option value=\"" + response3[i].id + "\">" + response3[i].id + " | " + response3[i].firstName + " " + response3[i].lastName + " </option>";
-                                    $("#selct").append(option);
-                                    console.log(option);
+                                    $("#select").append(option);
+                                    console.log(routesOptions["derouted" + i])
                                 }
                             });
                     }
@@ -267,8 +290,29 @@ $(document).ready(function() {
                     alert("User " + userName + " from " + userOrigin + " does not exist")
                 }
             });
-
     }
+
+    //Selecting the a Passenger (for Driver) or a Driver (for a Passenger)
+    $("#select").change(seclectOption);
+
+    function seclectOption() {
+        let option = $("#select option:selected").val()
+
+        routesArray.directRoute = [userOrigin, userDestination] // displayed routes 
+        routesOptions.directRoute = [userOrigin, userDestination] // options availables
+
+        if (option != 0) {
+            routesArray = {}
+            routesArray.directRoute = [userOrigin, userDestination];
+            routesArray.derouted = routesOptions["derouted" + option];
+            //processRequests();
+        } else {
+            routesArray = {}
+            routesArray.directRoute = [userOrigin, userDestination];
+            //processRequests();
+        }
+    }
+
     // Called Onload
     function init() {
 
