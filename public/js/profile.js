@@ -8,15 +8,13 @@ $(document).ready(function() {
 
     function displayUser(event) {
         event.preventDefault();
-        const inputFname = $("#firstName").val().trim();
-        const inputUname = $("#userName").val().trim();
-        const inputType = $("#userType option:selected").val();
+        let inputFname = $("#firstName").val().trim();
+        let inputUname = $("#userName").val().trim();
+        let inputType = $("#userType option:selected").val();
         let userFname = "";
         let userLname = "";
         let userType = "";
-
         let isUser = false;
-
         if (inputType == "Driver") {
             queryURL = "http://localhost:8080/api/drivers"
             queryURL2 = "http://localhost:8080/api/passengers"
@@ -34,10 +32,10 @@ $(document).ready(function() {
                 let routesArray = {}; //User and potential assossiate routes;
                 let routesDurations = {}; // Array of routes durations;
                 let routesDistances = {}; // Array of routes distances;
-
                 for (let i = 0; i < response.length; i++) {
                     userFname = response[i].firstName;
                     userLname = response[i].lastName;
+                    userUname = response[i].userName;
                     userOrigin = response[i].homeAddress;
                     userDestination = response[i].workAddress;
                     console.log(i, userOrigin, userDestination)
@@ -47,12 +45,10 @@ $(document).ready(function() {
                     // Standard Colours for navigation polylines
                     var routeColor = ['maroon', 'purple', 'aqua', 'red', 'green', 'silver', 'olive', 'blue', 'yellow', 'teal'];
 
-                    console.log(inputFname == userFname, inputFname == userFname, inputType == userType)
-                    console.log(inputFname, userFname, inputFname, userFname, inputType, userType)
+                    console.log(inputFname == userFname, inputUname == userUname, inputType == userType)
+                    console.log(inputFname, userFname, inputUname, userUname, inputType, userType)
 
-                    if (inputFname == userFname && inputFname == userFname && inputType == userType) {
-                        routesArray.directRoute = [userOrigin, userDestination]
-                        console.log(routesArray)
+                    if (inputFname == userFname && inputUname == userUname && inputType == userType) {
 
                         isUser = true;
                         $("#welcome").html("Welcome " + userFname + " " + userLname + "!");
@@ -63,16 +59,15 @@ $(document).ready(function() {
                         $("#signIn").css("display", "none");
                         $(".profile").css("display", "block");
 
+
+                        routesArray.directRoute = [userOrigin, userDestination]
+
                         // Make list with altrnative routes with available passengers
                         if (userType = "Passenger") {
                             passengerOption()
-                            console.log("I am passenger")
                         } else {
                             driverOption()
-                            console.log("I am driver")
                         }
-
-
                         generateRequests()
                         break;
                     }
@@ -112,6 +107,7 @@ $(document).ready(function() {
                                 }
                             });
                     }
+
 
                     // Let's make an array of requests which will become individual polylines on the map.
                     function generateRequests() {
