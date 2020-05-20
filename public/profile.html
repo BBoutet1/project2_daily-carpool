@@ -77,7 +77,7 @@
             </h4>
             <p id="saveType" style="display: none;"> </p>
             <h5 id="yourRoute" style="width:95%; padding-left: 10px; color: darkblue;">
-                Manage your route...
+                Your direct route profile...
             </h5>
             <table style="width:95%">
                 <tr>
@@ -88,8 +88,6 @@
                     <td id="origin"></td>
                     <td id="dest"></td>
                 </tr>
-            </table>
-            <table style="width:95%">
                 <tr>
                     <th>Direct distance</th>
                     <th>Direct duration</th>
@@ -97,6 +95,26 @@
                 <tr>
                     <td id="directDistance">wait...</td>
                     <td id="directTime">wait...</td>
+                </tr>
+            </table>
+            <h5 id="companion" style="width:95%; padding-left: 10px; color: darkblue;">
+            </h5>
+            <table id="pRoute" style="width:95%;">
+                <tr>
+                    <th>Home address</th>
+                    <th>Work address</th>
+                </tr>
+                <tr>
+                    <td id="pOrigin"></td>
+                    <td id="pDestination"></td>
+                </tr>
+                <tr class="driverDirect">
+                    <th>Direct distance</th>
+                    <th>Direct duration</th>
+                </tr class="driverDirect">
+                <tr>
+                    <td id="dDistance"></td>
+                    <td id="dDestination"></td>
                 </tr>
             </table>
             <table style="width:95%">
@@ -111,20 +129,8 @@
                     <td id="difference">No selection</td>
                 </tr>
             </table>
-            <h5 id="companion" style="width:95%; padding-left: 10px; color: darkblue;">
-            </h5>
-            <table id="pRoute" style="width:95%; display: none;">
-                <tr>
-                    <th>Home address</th>
-                    <th>Work address</th>
-                </tr>
-                <tr>
-                    <td id="pOrigin"></td>
-                    <td id="pDestination"></td>
-                </tr>
-            </table>
             <div style="width:95%">
-                <label id="list">Select a driver:</label>
+                <label id="list">Select your passenger:</label>
                 <select style="float: left; width: 85%; height: 100%;" id="select">No selection
                     <option value="0"> No selection </option>
                 </select>
