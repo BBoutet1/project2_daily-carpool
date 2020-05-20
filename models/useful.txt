@@ -171,3 +171,4 @@ if (userType = "Passenger") { pickPassenger() } else { pickDriver() }
                             });
                     }
 
+          if (userType = "Driver") { $("#list").html("Select a passenger"); }
