@@ -7,9 +7,9 @@ $(document).ready(function() {
         renderArray = [];
 
     // Standard Colours for navigation polylines
-    let routeColor = ['blue', 'green'];
-    let lineWeight = [4, 2];
-    let markerScale = [5, 3];
+    let routeColor = ['blue', 'green', 'red'];
+    let lineWeight = [5, 3, 7];
+    let markerScale = [7, 5, 3];
 
 
     let routesArray = {}; //User and routes;
@@ -17,8 +17,7 @@ $(document).ready(function() {
     let passengersRoutes = {}; // passengers direct route
     let driversRoutes = {}; // drivers direct route
     let optionsIdentity = {};
-    let routesDurations = {}; // Array of routes durations;
-    let routesDistances = {}; // Array of routes distances;
+    let durationsDistances = {}; //[sec, h, km]
 
     let option = 0;
 
@@ -85,8 +84,10 @@ $(document).ready(function() {
 
                         isUser = true;
                         $("#welcome").html("Welcome " + userFname + " " + userLname + "!");
-                        $("#yourRoute").html("Manage your " + userType + " route...");
-                        $("#saveType").html(userType); //used in routeMap.js calculation
+                        $("#yourRoute").html(userType + " direct route...");
+                        if (userType == "Passenger") {
+                            $("#yourRoute").css("color", "red");
+                        }
                         $("#origin").html(userOrigin);
                         $("#dest").html(userDestination);
                         $("#signIn").css("display", "none");
@@ -100,9 +101,9 @@ $(document).ready(function() {
                         }
                         if (userType == "Passenger") {
                             driverOptions()
-                        } else {
-
+                            $("#list").html("Select your driver")
                         }
+
                         generateRequests()
                         break;
                     }
@@ -147,7 +148,7 @@ $(document).ready(function() {
             .then(function(response2) {
                 for (let i = 0; i < response2.length; i++) {
                     let j = i + 1;
-                    driversRoutes["route" + j] = [response2[i].homeAddress, response2[i].workAddress];
+                    driversRoutes["route" + j] = [response2[i].homeAddress, response2[i].workAddress]
                     optionsIdentity["route" + j] = [response2[i].firstName, response2[i].lastName];
                     let driverRoute = [response2[i].homeAddress, response2[i].workAddress]
                     driverRoute.splice(1, 0, userOrigin, userDestination);
@@ -242,19 +243,24 @@ $(document).ready(function() {
                 renderArray[i] = new google.maps.DirectionsRenderer();
                 renderArray[i].setMap(map);
                 // Some unique options from the routeColor so we can see the routes
+                let strokeColor = routeColor[i];
+                console.log(i, option, userType)
+                if (option == 0 && userType == "Passenger") {
+                    strokeColor = "red"
+                }
                 renderArray[i].setOptions({
                     preserveViewport: true,
                     suppressInfoWindows: true,
                     polylineOptions: {
                         strokeWeight: lineWeight[i],
                         strokeOpacity: 0.9,
-                        strokeColor: routeColor[i]
+                        strokeColor: strokeColor
                     },
                     markerOptions: {
                         icon: {
                             path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
                             scale: markerScale[i],
-                            strokeColor: routeColor[i]
+                            strokeColor: strokeColor
                         }
                     }
                 });
@@ -268,7 +274,10 @@ $(document).ready(function() {
                 // zoom and center the map to show all the routes
                 map.fitBounds(bounds);
 
-                durationNdistance(result);
+                //Route duration and distance
+                durationsDistances["route" + i] = durationNdistance(result);
+                console.log(durationsDistances)
+                console.log(i, durationsDistances["route" + i])
             }
         }
 
@@ -293,43 +302,25 @@ $(document).ready(function() {
         let time = 0; //duration in secondes
         let duration = ""; //duration in hours and minutes
         let route = result.routes[0];
-        let timeDifference = "";
         for (var i = 0; i < route.legs.length; i++) {
             distance += route.legs[i].distance.value;
             time += route.legs[i].duration.value;
-
         }
         distance = (distance / 1000).toFixed(1);
         // Converting seconds in hours and minutes
         let hours = Math.floor(time / 3600);
         let minutes = Math.round((time % 3600) / 60);
         duration = hours + " h " + minutes + " min";
-
-        let direct = $("#directTime").html();
-
-        //Fill only is the direct route calculation
+        let timeDuration = [time, duration, distance];
+        let direct = $("#directTime").html()
+            //Fill only is the direct route calculation
         if (direct == "wait...") {
-            direcTime = time;
             $("#directTime").html(duration);
             $("#directDistance").html(distance + " km");
-            if (userType == "Passenger") {
-                $("#list").html("Select your driver")
-            }
-        } else {
-            if (userType == "Driver") {
-                $("#detouredTime").html(duration);
-                $("#detouredDistance").html(distance + " km");
-                //time difference calculion
-                time -= direcTime
-                let hours = Math.floor(time / 3600);
-                let minutes = Math.round((time % 3600) / 60);
-                timeDifference = hours + " h " + minutes + " min";
-                $("#difference").html(timeDifference);
-            }
         }
-
-
+        return timeDuration;
     }
+
     //Selecting the a Passenger (for Driver) or a Driver (for a Passenger)
     $("#select").change(seclectOption);
 
@@ -337,24 +328,53 @@ $(document).ready(function() {
         option = $("#select option:selected").val()
         routesArray = {}
         if (option != 0) {
-            routesArray.directRoute = [userOrigin, userDestination];
-            routesArray.derouted = routesOptions["derouted" + option];
+            $(".carpool").css("display", "block");
             if (userType == "Driver") {
-                $("#companion").html("Your passenger: " + optionsIdentity["route" + option][0] + " " + optionsIdentity["route" + option][1]);
-                $("#pRoute").css("display", "block");
+                routesArray.directRoute = [userOrigin, userDestination]; // driver direct route
+                routesArray.derouted = routesOptions["derouted" + option]; // driver route derouted to pick up passenger
+                routesArray.passenger = passengersRoutes["route" + option]; // passenger direct route
+                $("#companion").html("Passenger: " + optionsIdentity["route" + option][0] + " " + optionsIdentity["route" + option][1] + " direct route...");
+                $(".passengerDirect").css("display", "none");
                 $("#pOrigin").html(passengersRoutes["route" + option][0])
                 $("#pDestination").html(passengersRoutes["route" + option][1])
             }
 
             if (userType == "Passenger") {
-                $("#companion").html("Your driver: " + optionsIdentity["route" + option][0] + " " + optionsIdentity["route" + option][1]);
-                $("#pRoute").css("display", "block");
+                routesArray.directRoute = driversRoutes["route" + option]; // driver direct route
+                routesArray.derouted = routesOptions["derouted" + option]; // driver route derouted to pick up passenger
+                routesArray.passenger = [userOrigin, userDestination]; // passenger direct route
+                $("#companion").html("Driver " + optionsIdentity["route" + option][0] + " " + optionsIdentity["route" + option][1] + " direct route...");
+                $("#companion").css("color", "blue");
+                // $("#pRoute").css("display", "block");
                 $("#pOrigin").html(driversRoutes["route" + option][0])
                 $("#pDestination").html(driversRoutes["route" + option][1])
             }
 
+
+
             init();
             generateRequests();
+
+            setTimeout(function timer() {
+                console.log(durationsDistances)
+                $("#detouredTime").html(durationsDistances.route2[1]);
+                $("#detouredDistance").html(durationsDistances.route2[2] + " km");
+                //time difference calculion
+                let time = durationsDistances.route2[0] - durationsDistances.route1[0];
+                let hours = Math.floor(time / 3600);
+                let minutes = Math.floor((time % 3600) / 60);
+                timeDifference = hours + " h " + minutes + " min";
+                $("#difference").html(timeDifference);
+
+                if (userType == "Passenger") {
+                    $("#dDistance").html(durationsDistances.route1[2] + " km");
+                    $("#dDuration").html(durationsDistances.route1[1]);
+
+                }
+
+            }, 3000);
+
+
         } else {
             routesArray.directRoute = [userOrigin, userDestination];
             init();
