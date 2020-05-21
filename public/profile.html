@@ -75,8 +75,8 @@
         <main class="profile">
             <h4 id="welcome" style="width:95%">
             </h4>
-            <p id="saveType" style="display: none;"> </p>
-            <h5 id="yourRoute" style="width:95%; padding-left: 10px; color: darkblue;">
+            <!-- <p id="saveType" style="display: none;"> </p> -->
+            <h5 id="yourRoute" style="width:95%; padding-left: 10px; color: blue;">
                 Your direct route profile...
             </h5>
             <table style="width:95%">
@@ -97,9 +97,9 @@
                     <td id="directTime">wait...</td>
                 </tr>
             </table>
-            <h5 id="companion" style="width:95%; padding-left: 10px; color: darkblue;">
+            <h5 id="companion" class="carpool" style="width:95%; padding-left: 10px; color: red; display: none;">
             </h5>
-            <table id="pRoute" style="width:95%;">
+            <table id="pRoute" class="carpool" style="width:95%;  display: none;">
                 <tr>
                     <th>Home address</th>
                     <th>Work address</th>
@@ -108,25 +108,28 @@
                     <td id="pOrigin"></td>
                     <td id="pDestination"></td>
                 </tr>
-                <tr class="driverDirect">
+                <tr class="passengerDirect">
                     <th>Direct distance</th>
                     <th>Direct duration</th>
-                </tr class="driverDirect">
-                <tr>
+                </tr>
+                <tr class="passengerDirect">
                     <td id="dDistance"></td>
-                    <td id="dDestination"></td>
+                    <td id="dDuration"></td>
                 </tr>
             </table>
-            <table style="width:95%">
+            <h5 id="detour" class="carpool" style="width:95%; padding-left: 10px; color: green; display: none;">
+                Driver detour...
+            </h5>
+            <table class="carpool" style="width:95%; display: none;">
                 <tr>
                     <th>Detoured distance</th>
                     <th>Detoured duration</th>
                     <th>Time difference</th>
                 </tr>
                 <tr>
-                    <td id="detouredDistance">No selection</td>
-                    <td id="detouredTime">No selection</td>
-                    <td id="difference">No selection</td>
+                    <td id="detouredDistance">wait...</td>
+                    <td id="detouredTime">wait...</td>
+                    <td id="difference">wait...</td>
                 </tr>
             </table>
             <div style="width:95%">
@@ -134,7 +137,7 @@
                 <select style="float: left; width: 85%; height: 100%;" id="select">No selection
                     <option value="0"> No selection </option>
                 </select>
-                <input class="button button button-rounded-hover5" id="merge" type="submit " value="Merge routes ">
+                <input class="button button button-rounded-hover5 carpool" id="merge" type="submit " value="Merge routes" style="display: none;">
             </div>
             <div>
             </div>

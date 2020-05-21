@@ -52,21 +52,12 @@
       border: 1px solid black;
       border-style: solid;
       text-align: left;
+      height: 20px;
   }
   
   table {
       margin: 5px;
       margin-bottom: 20px;
-  }
-  
-  #origin,
-  #dest,
-  #directTime,
-  #directDistance,
-  #detouredTime,
-  #detouredDistance,
-  #difference {
-      color: blue
   }
   
   #userName,
