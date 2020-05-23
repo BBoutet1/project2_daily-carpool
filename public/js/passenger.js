@@ -46,88 +46,24 @@ $(document).ready(function() {
                         return;
                     }
                 }
-                // Calling the upsertDriver function and passing in values of driver parameters
-                upsertPassenger({
+                // Calling the insertDriver function and passing in values of driver parameters
+                insertPassenger({
                     firstName: firstName.val().trim(),
                     lastName: lastName.val().trim(),
                     userName: userName.val().trim(),
                     homeAddress: driverOrigin.val().trim(),
                     workAddress: driverDestination.val().trim(),
-                    waypoints: "",
-                    directDuration: 0,
-                    poolDuraction: 0,
-                    timeDifference: 0,
                     type: "Driver"
                 });
                 alert("Passenger profile created for " + firstName.val().trim() + " " + lastName.val().trim() + ". Do not forget to record your user name: " + userName.val().trim())
-
             })
     }
 
 
     // A function for creating an passenger. Calls getPassengers upon completion
-    function upsertPassenger(passengerData) {
+    function insertPassenger(passengerData) {
         console.log(passengerData.firstName)
         $.post("/api/passengers", passengerData)
-            .then(getPassengers);
     }
 
-    // Function for creating a new list row for passengers
-    function createPassengerRow(passengerData) {
-        var newTr = $("<tr>");
-        newTr.data("passenger", passengerData);
-        newTr.append("<td>" + passengerData.name + "</td>");
-        if (passengerData.Posts) {
-            newTr.append("<td> " + passengerData.Posts.length + "</td>");
-        } else {
-            newTr.append("<td>0</td>");
-        }
-        newTr.append("<td><a href='/blog?passenger_id=" + passengerData.id + "'>Go to Posts</a></td>");
-        newTr.append("<td><a href='/cms?passenger_id=" + passengerData.id + "'>Create a Post</a></td>");
-        newTr.append("<td><a style='cursor:pointer;color:red' class='delete-passenger'>Delete Passenger</a></td>");
-        return newTr;
-    }
-
-    // Function for retrieving passengers and getting them ready to be rendered to the page
-    function getPassengers() {
-        $.get("/api/passengers", function(data) {
-            var rowsToAdd = [];
-            for (var i = 0; i < data.length; i++) {
-                rowsToAdd.push(createPassengerRow(data[i]));
-            }
-            //renderPassengerList(rowsToAdd);
-            //passengerName.val("");
-        });
-    }
-
-    // A function for rendering the list of passengers to the page
-    function renderPassengerList(rows) {
-        passengerList.children().not(":last").remove();
-        passengerContainer.children(".alert").remove();
-        if (rows.length) {
-            console.log(rows);
-            passengerList.prepend(rows);
-        } else {
-            renderEmpty();
-        }
-    }
-
-    // Function for handling what to render when there are no passengers
-    function renderEmpty() {
-        var alertDiv = $("<div>");
-        alertDiv.addClass("alert alert-danger");
-        alertDiv.text("You must create an Passenger before you can create a Post.");
-        passengerContainer.append(alertDiv);
-    }
-
-    // Function for handling what happens when the delete button is pressed
-    // function handleDeleteButtonPress() {
-    //     var listItemData = $(this).parent("td").parent("tr").data("passenger");
-    //     var id = listItemData.id;
-    //     $.ajax({
-    //             method: "DELETE",
-    //             url: "/api/passengers/" + id
-    //         })
-    //         .then(getPassengers);
-    // }
 });

@@ -18,38 +18,6 @@ module.exports = function(app) {
         if (req.query.driver_id) {
             query.DriverId = req.query.driver_id;
         }
-        //Distance calculation
-        //*****************************/
-        //let query = {};
-        // let origin = req.query.homeAddress;
-        // console.log(origin)
-        // let destination = req.query.workAddress;
-        // let APIkey = AIzaSyDE2yBUEZx3Cup_pwq22o_WferVgBpgSdE;
-        // let queryURL = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" +
-        //     origin + "&destinations=" + destination + "&mode=driving&key=" + APIkey;
-
-        // $.ajax({
-        //         url: queryURL,
-        //         method: "GET"
-        //     })
-        //     .then(function(response) {
-        //         for (let i = 0; i < response.length; i++) {
-        //             userName = response[i].name;
-        //             userOrigin = response[i].homeAddress;
-        //             userDestination = response[i].workAddress;
-        //             userType = response[i].type;
-        //             if (inputName == userName && inputOrigin == userOrigin && inputType == userType) {
-        //                 isUser = true;
-        //                 $("#welcome").html("Welcome " + userName + "!");
-        //                 $("#origin").html(userOrigin);
-        //                 $("#dest").html(userDestination);
-        //                 $("#signIn").css("display", "none")
-        //                 $(".profile").css("display", "block")
-        //             }
-        //         }
-
-        //     })
-
 
         //********************************** */
         // Here we add an "include" property to our options in our findAll query
@@ -57,13 +25,12 @@ module.exports = function(app) {
         // In this case, just db.Author
         db.Driver.findAll({
             where: query,
-            // include: [db.Driver]
         }).then(function(dbDriver) {
             res.json(dbDriver);
         });
     });
 
-    // Get route for retrieving a single post
+    // Get route for retrieving a single driver
     app.get("/api/drivers/:id", function(req, res) {
         // Here we add an "include" property to our options in our findOne query
         // We set the value to an array of the models we want to include in a left outer join
@@ -72,20 +39,19 @@ module.exports = function(app) {
             where: {
                 id: req.params.id
             },
-            include: [db.Driver]
         }).then(function(dbDriver) {
             res.json(dbDriver);
         });
     });
 
-    // POST route for saving a new post
+    // POST route for saving a new driver
     app.post("/api/drivers", function(req, res) {
         db.Driver.create(req.body).then(function(dbDriver) {
             res.json(dbDriver);
         });
     });
 
-    // DELETE route for deleting posts
+    // DELETE route for deleting driver
     app.delete("/api/drivers/:id", function(req, res) {
         db.Driver.destroy({
             where: {
@@ -96,7 +62,7 @@ module.exports = function(app) {
         });
     });
 
-    // PUT route for updating posts
+    // PUT route for updating driver
     app.put("/api/drivers", function(req, res) {
         db.Driver.update(
             req.body, {
