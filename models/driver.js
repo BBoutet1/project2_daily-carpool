@@ -6,20 +6,8 @@ module.exports = function(sequelize, DataTypes) {
         userName: DataTypes.STRING,
         homeAddress: DataTypes.STRING,
         workAddress: DataTypes.STRING,
-        waypoints: DataTypes.STRING,
-        directDuration: DataTypes.INTEGER,
-        poolDuraction: DataTypes.INTEGER,
-        timeDifference: DataTypes.INTEGER,
         type: DataTypes.STRING,
     });
-
-    Driver.associate = function(models) {
-        // Associating Driver with Posts
-        // When an Driver is deleted, also delete any associated Posts
-        Driver.hasMany(models.Passenger, {
-            // onDelete: "cascade"
-        });
-    };
 
     return Driver;
 };

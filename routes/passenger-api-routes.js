@@ -12,47 +12,42 @@ var db = require("../models");
 // =============================================================
 module.exports = function(app) {
 
-    // GET route for getting all of the posts
+    // GET route for getting all of the passengers
     app.get("/api/passengers", function(req, res) {
         var query = {};
         if (req.query.passenger_id) {
             query.DriverId = req.query.driver_id;
         }
-        // Here we add an "include" property to our options in our findAll query
         // We set the value to an array of the models we want to include in a left outer join
         // In this case, just db.Author
         db.Passenger.findAll({
             where: query,
-            // include: [db.Driver]
         }).then(function(dbPassenger) {
             res.json(dbPassenger);
         });
     });
 
-    // Get route for retrieving a single post
+    // Get route for retrieving a single passenger
     app.get("/api/passengers/:id", function(req, res) {
-        // Here we add an "include" property to our options in our findOne query
         // We set the value to an array of the models we want to include in a left outer join
-        // In this case, just db.Author
+        // In this case, just db.Passenger
         db.Passenger.findOne({
             where: {
                 id: req.params.id
             },
-            include: [db.Driver]
         }).then(function(dbPassenger) {
             res.json(dbPassenger);
         });
     });
 
-    // POST route for saving a new post
+    // POST route for saving a new passenger
     app.post("/api/passengers", function(req, res) {
-        console.log("papa")
         db.Passenger.create(req.body).then(function(dbPassenger) {
             res.json(dbPassenger);
         });
     });
 
-    // DELETE route for deleting posts
+    // DELETE route for deleting passengers
     app.delete("/api/passengers/:id", function(req, res) {
         db.Passenger.destroy({
             where: {
@@ -63,7 +58,7 @@ module.exports = function(app) {
         });
     });
 
-    // PUT route for updating posts
+    // PUT route for updating passengers
     app.put("/api/passengers", function(req, res) {
         db.Passenger.update(
             req.body, {

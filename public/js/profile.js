@@ -1,14 +1,14 @@
 $(document).ready(function() {
 
-    //Google map API request parameter variables
+    //Google map API request parameters and variables
     let directionsService = new google.maps.DirectionsService();
     let map, data, bounds;
     let requestArray = [],
         renderArray = [];
 
-    // Standard Colours for navigation polylines
-    let routeColor = ['blue', 'green', 'red'];
-    let lineWeight = [5, 3, 7];
+    // Routes polylines weight and color code: 
+    let routeColor = ['blue', 'green', 'red']; // blue-->driver route (direct then derouted); green -->derouted driver route; red--->driver direct route
+    let lineWeight = [6, 9, 2.5]; // routes polylines weight to make them distincts
     let markerScale = [7, 5, 3];
 
 
@@ -16,31 +16,28 @@ $(document).ready(function() {
     let routesOptions = {}; // routes in options with a passenger or driver
     let passengersRoutes = {}; // passengers direct route
     let driversRoutes = {}; // drivers direct route
-    let optionsIdentity = {};
+    let optionsIdentity = {}; // names and first names array
     let durationsDistances = {}; //[sec, h, km]
 
-    let option = 0;
+
+    let option = 0; // selected passagenr (for driver) or driver (for passenger) option number
 
 
-    let queryURL = ""; //User API url
-    let queryURL2 = ""; // API to get potential associate
+    let queryURL = ""; //Called API based on signed in user type
+    let queryURL2 = ""; // Second API for route companion selection
 
-    //Login data
+    //First name, username, and user type retriverd from the sign in form 
     let inputFname = "";
     let inputUname = "";
     let inputType = "";
 
-    //Signing in user data
+    //Signing in user data to be cheked with input entries
     let userFname = "";
     let userLname = "";
     let userType = "";
 
     //True if the signing in user is found
     let isUser = false;
-
-
-    //Direct route time in second
-    let direcTime = 0;
 
     //Finding the user data and processing
     $("#signIn").on("submit", displayUser);
@@ -54,8 +51,8 @@ $(document).ready(function() {
 
 
         if (inputType == "Driver") {
-            queryURL = "http://localhost:8080/api/drivers"
-            queryURL2 = "http://localhost:8080/api/passengers"
+            queryURL = "http://localhost:8080/api/drivers" // user called API
+            queryURL2 = "http://localhost:8080/api/passengers" // second API for companion selection
         } else {
             queryURL = "http://localhost:8080/api/passengers"
             queryURL2 = "http://localhost:8080/api/drivers"
@@ -73,18 +70,15 @@ $(document).ready(function() {
                     userUname = response[i].userName;
                     userOrigin = response[i].homeAddress;
                     userDestination = response[i].workAddress;
-                    console.log(i, userOrigin, userDestination)
-
                     userType = response[i].type;
 
-                    console.log(inputFname == userFname, inputUname == userUname, inputType == userType)
-                    console.log(inputFname, userFname, inputUname, userUname, inputType, userType)
-
                     if (inputFname == userFname && inputUname == userUname && inputType == userType) {
-
+                        //User identified
                         isUser = true;
+
                         $("#welcome").html("Welcome " + userFname + " " + userLname + "!");
                         $("#yourRoute").html(userType + " direct route...");
+                        //Passenger route color code
                         if (userType == "Passenger") {
                             $("#yourRoute").css("color", "red");
                         }
@@ -93,31 +87,34 @@ $(document).ready(function() {
                         $("#signIn").css("display", "none");
                         $(".profile").css("display", "block");
 
-                        routesArray.directRoute = [userOrigin, userDestination] // displayed routes
+                        //Direct route array
+                        routesArray.directRoute = [userOrigin, userDestination]
 
-                        // Make list with altrnative routes with available passengers
+
                         if (userType == "Driver") {
+                            // Make list of all passengers for a driver user
                             passengerOptions()
                         }
                         if (userType == "Passenger") {
+                            // Make list of all drivers for a passenger user
                             driverOptions()
                             $("#list").html("Select your driver")
                         }
-
+                        // generate request to googlemap API and make routes
                         generateRequests()
                         break;
                     }
 
                 }
             }).then(function() {
-                console.log(isUser + " Conclude")
                 if (!isUser) {
-                    alert("User " + inputFname + " not found")
+                    //The user is not in the database
+                    alert("User " + inputFname + " not found in" + inputUname + " database")
                 }
             });
     }
 
-    // For a Driver user make route with each available passenger
+    // The user is a driver we need the list of all passengers
     function passengerOptions() {
         $.ajax({
                 url: queryURL2,
@@ -128,8 +125,6 @@ $(document).ready(function() {
                     let j = i + 1;
                     passengersRoutes["route" + j] = [response2[i].homeAddress, response2[i].workAddress];
                     optionsIdentity["route" + j] = [response2[i].firstName, response2[i].lastName];
-                    console.log("optionsIdentity" + optionsIdentity["route" + j][1])
-
                     let driverRoute = [userOrigin, userDestination];
                     driverRoute.splice(1, 0, response2[i].homeAddress, response2[i].workAddress);
                     routesOptions["derouted" + j] = driverRoute;
@@ -139,7 +134,7 @@ $(document).ready(function() {
             });
     }
 
-    // For a Passenger user make route with each available driver
+    // The user is a passenger we need the list of all drivers
     function driverOptions() {
         $.ajax({
                 url: queryURL2,
@@ -156,64 +151,57 @@ $(document).ready(function() {
                     let option = "<option value=\"" + response2[i].id + "\">" + response2[i].id + " | " + response2[i].firstName + " " + response2[i].lastName + " </option>";
                     $("#select").append(option);
 
-                    console.log(j, routesOptions)
                 }
             });
     }
 
-    //Making requests which will become individual polylines on the map is more than 1 elements in the array.
+    //Making requests get individual polylines on the map, calculate distances and durationon
     function generateRequests() {
 
-        console.log(routesArray);
-        requestArray = [];
+        requestArray = []; //routes array
         for (var route in routesArray) {
-            // This now deals with one of the people / routes
-
-            // Somewhere to store the wayoints
-            var waypts = [];
-
-            // 'start' and 'finish' will be the routes origin and destination
-            var start, finish
-
-            // lastpoint is used to ensure that duplicate waypoints are stripped
-            var lastpoint
+            // Wayoints are points in the middle between first and last points in the route array
+            let waypts = [];
+            // 'origin' and 'destination' are the routes origin and destination
+            let origin, destination
+                // lastpoint is used avoid duplicate waypoints
+            let lastpoint
 
             data = routesArray[route]
 
             limit = data.length
-            for (var waypoint = 0; waypoint < limit; waypoint++) {
+            for (let waypoint = 0; waypoint < limit; waypoint++) {
                 if (data[waypoint] === lastpoint) {
-                    // Duplicate of of the last waypoint - don't bother
+                    // Duplicate last waypoint - just in case
                     continue;
                 }
-
-                // Prepare the lastpoint for the next loop
+                //Lastpoint for the next loop
                 lastpoint = data[waypoint]
 
-                // Add this to waypoint to the array for making the request
+                // Adding the point to waypoint array to prepare request
                 waypts.push({
                     location: data[waypoint],
                     stopover: true
                 });
             }
 
-            // Grab the first waypoint for the 'start' location
-            start = (waypts.shift()).location;
-            // Grab the last waypoint for use as a 'finish' location
-            finish = waypts.pop();
-            if (finish === undefined) {
-                // Unless there was no finish location for some reason?
-                finish = start;
+            // The fist point in the array as route 'origin'
+            origin = (waypts.shift()).location;
+            // The last waypoint for use as 'destination'
+            destination = waypts.pop();
+            if (destination === undefined) {
+                // Unless there was no destination location for some reason?
+                destination = origin;
             } else {
-                finish = finish.location;
+                destination = destination.location;
             }
-
-            // Let's create the Google Maps request object
-            var request = {
-                origin: start,
-                destination: finish,
+            // Creating Google Maps request object
+            let request = {
+                origin: origin,
+                destination: destination,
                 waypoints: waypts,
-                travelMode: google.maps.TravelMode.DRIVING
+                travelMode: google.maps.TravelMode.DRIVING,
+                avoidTolls: true,
             };
 
             // and save it in our requestArray
@@ -228,78 +216,157 @@ $(document).ready(function() {
 
     function processRequests() {
 
-        // Counter to track request submission and process one at a time;
+        // Request submission counter;
         var i = 0;
 
-        // Used to submit the request 'i'
+        // Submitting the request 'i'
         function submitRequest() {
             directionsService.route(requestArray[i].request, directionResults);
         }
 
-        // Used as callback for the above request for current 'i'
+        // Callback for the above request 'i'
         function directionResults(result, status) {
             if (status == google.maps.DirectionsStatus.OK) {
-                // Create a unique DirectionsRenderer 'i'
+                // DirectionsRenderer 'i'
                 renderArray[i] = new google.maps.DirectionsRenderer();
                 renderArray[i].setMap(map);
-                // Some unique options from the routeColor so we can see the routes
+                // Setting the route polyline color and weight
                 let strokeColor = routeColor[i];
-                console.log(i, option, userType)
                 if (option == 0 && userType == "Passenger") {
+                    //passenger polyline route always red
                     strokeColor = "red"
                 }
+
+
+                let opacity = 1;
+                if (i != 2) {
+                    opacity = 0.5
+                }
+
                 renderArray[i].setOptions({
                     preserveViewport: true,
                     suppressInfoWindows: true,
                     polylineOptions: {
                         strokeWeight: lineWeight[i],
-                        strokeOpacity: 0.9,
+                        strokeOpacity: opacity,
                         strokeColor: strokeColor
                     },
+
                     markerOptions: {
                         icon: {
-                            path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+                            path: "",
                             scale: markerScale[i],
                             strokeColor: strokeColor
                         }
+
                     }
                 });
 
-                // Use this new renderer with the result
+                // Using Renderer with the result
                 renderArray[i].setDirections(result);
-                // and start the next request
+                // Next request
                 nextRequest();
 
                 bounds.union(result.routes[0].bounds);
                 // zoom and center the map to show all the routes
                 map.fitBounds(bounds);
 
+
+                //Driver origin marker
+                let iconOrigin = {
+                    path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+                    scale: markerScale[i],
+                    strokeOpacity: opacity,
+                    strokeColor: strokeColor,
+                };
+
+                //Driver destination marker
+                let iconDest = {
+                    path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+                    scale: markerScale[i],
+                    strokeOpacity: opacity,
+                    strokeColor: strokeColor,
+                };
+
+                // Passenger pick-up marker
+                let iconWayOrigin = {
+                    path: google.maps.SymbolPath.BACKWARD_OPEN_ARROW,
+                    scale: markerScale[i],
+                    strokeOpacity: opacity,
+                    strokeColor: "red"
+                };
+
+                //passenger drop-off marker
+                let iconWayDest = {
+                    path: google.maps.SymbolPath.FORWARD_OPEN_ARROW,
+                    scale: markerScale[i],
+                    strokeOpacity: opacity,
+                    strokeColor: "red"
+                };
+
+                let legs = result.routes[0].legs; // route legs array
+                let legsNum = legs.length; // number of legs
+                let originLeg = result.routes[0].legs[0]; // first leg
+                let destLeg = result.routes[0].legs[legsNum - 1] // last leg
+
+                //The if condition just to avoid duplicate marker label
+                if (option == 0 || (option != 0 && legsNum > 2)) {
+                    makeMarker(originLeg.start_location, iconOrigin, { text: "ORIG", color: "brown" }) //driver origin marker
+                    makeMarker(destLeg.end_location, iconDest, { text: "DEST", color: "brown" }) // driver destination marker
+                } else {
+                    makeMarker(originLeg.start_location, iconOrigin)
+                    makeMarker(destLeg.end_location, iconDest, )
+                }
+
+                for (i = 1; i < (legsNum - 1); i++) {
+                    let originWpt = result.routes[0].legs[i];
+                    let destWpt = result.routes[0].legs[i]
+                    if (option == 0) {
+                        makeMarker(originWpt.start_location, iconWayOrigin) // passenger pick-up marker
+                        makeMarker(destWpt.end_location, iconWayDest) // passenger dropp-off marker
+                    } else {
+                        makeMarker(originWpt.start_location, iconWayOrigin, { text: "PICK", color: "brown" })
+                        makeMarker(destWpt.end_location, iconWayDest, { text: "DROP", color: "brown" })
+                    }
+
+                }
+
                 //Route duration and distance
                 durationsDistances["route" + i] = durationNdistance(result);
-                console.log(durationsDistances)
-                console.log(i, durationsDistances["route" + i])
+
+            } else {
+                alert('Directions request failed due to ' + status);
             }
         }
 
         function nextRequest() {
-            // Increase the counter
             i++;
-            // Make sure we are still waiting for a request
             if (i >= requestArray.length) {
-                // No more to do
+                // Last request reached
                 return;
             }
-            // Submit another request
+            // Submit next request
             submitRequest();
         }
-        // This request is just to kick start the whole process
+        // This request is just to kick origin the whole process
         submitRequest();
     }
 
-    // A function to calculate distanes et duration
+    //A function to make marker for origin and destination
+
+    function makeMarker(position, icon, label) {
+        new google.maps.Marker({
+            position: position,
+            map: map,
+            icon: icon,
+            label: label
+        });
+    }
+
+    // A function to calculate distance and duration
     function durationNdistance(result) {
         let distance = 0; //distance
-        let time = 0; //duration in secondes
+        let time = 0; //duration in seconds
         let duration = ""; //duration in hours and minutes
         let route = result.routes[0];
         for (var i = 0; i < route.legs.length; i++) {
@@ -312,12 +379,13 @@ $(document).ready(function() {
         let minutes = Math.round((time % 3600) / 60);
         duration = hours + " h " + minutes + " min";
         let timeDuration = [time, duration, distance];
-        let direct = $("#directTime").html()
-            //Fill only is the direct route calculation
+        let direct = $("#directTime").html() // display the direct route duration
+            //Fill only if it is the user direct route calculation
         if (direct == "wait...") {
             $("#directTime").html(duration);
             $("#directDistance").html(distance + " km");
         }
+        // returning calculation data for the detoured route data rendering
         return timeDuration;
     }
 
@@ -328,6 +396,7 @@ $(document).ready(function() {
         option = $("#select option:selected").val()
         routesArray = {}
         if (option != 0) {
+            // We have a detour option selected
             $(".carpool").css("display", "block");
             if (userType == "Driver") {
                 routesArray.directRoute = [userOrigin, userDestination]; // driver direct route
@@ -345,16 +414,14 @@ $(document).ready(function() {
                 routesArray.passenger = [userOrigin, userDestination]; // passenger direct route
                 $("#companion").html("Driver " + optionsIdentity["route" + option][0] + " " + optionsIdentity["route" + option][1] + " direct route...");
                 $("#companion").css("color", "blue");
-                // $("#pRoute").css("display", "block");
                 $("#pOrigin").html(driversRoutes["route" + option][0])
                 $("#pDestination").html(driversRoutes["route" + option][1])
             }
 
-
-
             init();
             generateRequests();
 
+            // Need durations and distances calculation to finish before continue processing
             setTimeout(function timer() {
                 console.log(durationsDistances)
                 $("#detouredTime").html(durationsDistances.route2[1]);
@@ -367,15 +434,15 @@ $(document).ready(function() {
                 $("#difference").html(timeDifference);
 
                 if (userType == "Passenger") {
+                    // direct route data for passenger in a different table(not use for driving duration and distance)
                     $("#dDistance").html(durationsDistances.route1[2] + " km");
                     $("#dDuration").html(durationsDistances.route1[1]);
-
                 }
 
-            }, 3000);
-
+            }, 5000);
 
         } else {
+            // No detour option selected (deselected)
             routesArray.directRoute = [userOrigin, userDestination];
             init();
             generateRequests();
@@ -388,6 +455,7 @@ $(document).ready(function() {
         }
     }
 
+    // Merge route button allow to show up only the detoured route that includes waypoints for the passenger
     $("#merge").on("click", mergeRoutes);
 
     function mergeRoutes() {
@@ -398,9 +466,7 @@ $(document).ready(function() {
             generateRequests();
         }
     }
-
-
-    // Called Onload
+    // Called Onload to initialie the map
     function init() {
 
         // Th map initialized in Toroto
@@ -411,7 +477,6 @@ $(document).ready(function() {
             streetViewControl: false,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
-
         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
         // Start the request making
