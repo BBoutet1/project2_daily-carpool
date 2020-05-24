@@ -73,8 +73,8 @@ $(document).ready(function() {
                         //User identified
                         isUser = true;
 
-                        $("#welcome").html("Welcome " + userFname + " " + userLname + "!");
-                        $("#yourRoute").html(userType + " direct route...");
+                        $("#welcome").html(`Welcome ${userFname} ${userLname} !`);
+                        $("#yourRoute").html(`${userType} direct route...`);
                         //Passenger route color code
                         if (userType == "Passenger") {
                             $("#yourRoute").css("color", "red");
@@ -106,7 +106,7 @@ $(document).ready(function() {
             }).then(function() {
                 if (!isUser) {
                     //The user is not in the database
-                    alert("User " + inputFname + " not found in" + inputUname + " database")
+                    alert(`User ${inputFname} not found in ${inputType} database`)
                 }
             });
     }
@@ -125,7 +125,7 @@ $(document).ready(function() {
                     let driverRoute = [userOrigin, userDestination];
                     driverRoute.splice(1, 0, response2[i].homeAddress, response2[i].workAddress);
                     routesOptions["derouted" + j] = driverRoute;
-                    let option = "<option value=\"" + response2[i].id + "\">" + response2[i].id + " | " + response2[i].firstName + " " + response2[i].lastName + " </option>";
+                    let option = `<option value="${response2[i].id}">${i} | ${response2[i].firstName} ${response2[i].lastName}</option>`;
                     $("#select").append(option);
                 }
             });
@@ -145,9 +145,8 @@ $(document).ready(function() {
                     let driverRoute = [response2[i].homeAddress, response2[i].workAddress]
                     driverRoute.splice(1, 0, userOrigin, userDestination);
                     routesOptions["derouted" + j] = driverRoute;
-                    let option = "<option value=\"" + response2[i].id + "\">" + response2[i].id + " | " + response2[i].firstName + " " + response2[i].lastName + " </option>";
+                    let option = `<option value="${response2[i].id}">${i} | ${response2[i].firstName} ${response2[i].lastName}</option>`;
                     $("#select").append(option);
-
                 }
             });
     }
@@ -333,6 +332,8 @@ $(document).ready(function() {
 
             } else {
                 alert('Directions request failed due to ' + status);
+                $(".detour").html("No results");
+                return
             }
         }
 
@@ -399,7 +400,7 @@ $(document).ready(function() {
                 routesArray.directRoute = [userOrigin, userDestination]; // driver direct route
                 routesArray.derouted = routesOptions["derouted" + option]; // driver route derouted to pick up passenger
                 routesArray.passenger = passengersRoutes["route" + option]; // passenger direct route
-                $("#companion").html("Passenger: " + optionsIdentity["route" + option][0] + " " + optionsIdentity["route" + option][1] + " direct route...");
+                $("#companion").html(`Passenger: ${optionsIdentity["route" + option][0]} ${optionsIdentity["route" + option][1]} direct route...`);
                 $(".passengerDirect").css("display", "none");
                 $("#pOrigin").html(passengersRoutes["route" + option][0])
                 $("#pDestination").html(passengersRoutes["route" + option][1])
@@ -409,7 +410,7 @@ $(document).ready(function() {
                 routesArray.directRoute = driversRoutes["route" + option]; // driver direct route
                 routesArray.derouted = routesOptions["derouted" + option]; // driver route derouted to pick up passenger
                 routesArray.passenger = [userOrigin, userDestination]; // passenger direct route
-                $("#companion").html("Driver " + optionsIdentity["route" + option][0] + " " + optionsIdentity["route" + option][1] + " direct route...");
+                $("#companion").html(`"Driver: ${optionsIdentity["route" + option][0]} ${optionsIdentity["route" + option][1]} direct route...`);
                 $("#companion").css("color", "blue");
                 $("#pOrigin").html(driversRoutes["route" + option][0])
                 $("#pDestination").html(driversRoutes["route" + option][1])
@@ -420,7 +421,6 @@ $(document).ready(function() {
 
             // Need durations and distances calculation to finish before continue processing
             setTimeout(function timer() {
-                console.log(durationsDistances)
                 $("#detouredTime").html(durationsDistances.route2[1]);
                 $("#detouredDistance").html(durationsDistances.route2[2] + " km");
                 //time difference calculion
@@ -444,11 +444,9 @@ $(document).ready(function() {
             init();
             generateRequests();
             $("#directTime").html("wait...")
-            $("#detouredTime").html("No selection");
-            $("#detouredDistance").html("No selection");
-            $("#difference").html("No selection");
             $("#companion").html("");
             $("#pRoute").css("display", "none");
+            $(".carpool").css("display", "none");
         }
     }
 
