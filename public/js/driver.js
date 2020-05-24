@@ -35,11 +35,8 @@ $(document).ready(function() {
             })
             .then(function(response) {
                 for (let i = 0; i < response.length; i++) {
-                    console.log(i, userName.val().trim(), response[i].userName)
-                    console.log(userName.val().trim() == response[i].userName)
                     if (userName.val().trim() == response[i].userName) {
-                        console.log("Forloop breat at i = " + i + "of" + response.length)
-                        alert("User name " + userName.val().trim() + " already exist. Register with another user name");
+                        alert(`User name ${userName.val().trim()} already exist. Register with another user name`);
                         return;
                     }
                 }
@@ -52,14 +49,13 @@ $(document).ready(function() {
                     workAddress: driverDestination.val().trim(),
                     type: "Driver"
                 });
-                alert("Driver profile created for " + firstName.val().trim() + " " + lastName.val().trim() + ". Do not forget to record your user name: " + userName.val().trim())
+                alert(`Driver profile created for ${firstName.val().trim()} ${lastName.val().trim()}. Do not forget to record your user name: ${userName.val().trim()}`)
 
             })
     }
 
     // A function for creating an driver. Calls getDrivers upon completion
     function insertDriver(driverData) {
-        console.log(driverData.firstName, driverData.lastName)
         $.post("/api/drivers", driverData)
     }
 

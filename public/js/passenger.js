@@ -38,11 +38,8 @@ $(document).ready(function() {
             })
             .then(function(response) {
                 for (let i = 0; i < response.length; i++) {
-                    console.log(i, userName.val().trim(), response[i].userName)
-                    console.log(userName.val().trim() == response[i].userName)
                     if (userName.val().trim() == response[i].userName) {
-                        console.log("Forloop break at i = " + i + "of" + response.length)
-                        alert("User name " + userName.val().trim() + " already exist. Register with another user name");
+                        alert(`User name ${userName.val().trim()} already exist. Register with another user name`);
                         return;
                     }
                 }
@@ -55,14 +52,13 @@ $(document).ready(function() {
                     workAddress: driverDestination.val().trim(),
                     type: "Driver"
                 });
-                alert("Passenger profile created for " + firstName.val().trim() + " " + lastName.val().trim() + ". Do not forget to record your user name: " + userName.val().trim())
+                alert(`Passenger profile created for ${firstName.val().trim()}  ${lastName.val().trim()}. Do not forget to record your user name: ${userName.val().trim()}`)
             })
     }
 
 
     // A function for creating an passenger. Calls getPassengers upon completion
     function insertPassenger(passengerData) {
-        console.log(passengerData.firstName)
         $.post("/api/passengers", passengerData)
     }
 

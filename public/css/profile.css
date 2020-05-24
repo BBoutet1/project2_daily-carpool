@@ -98,12 +98,12 @@
         margin-top: 10px;
     }
     
-    @media screen and (max-width: 690px) {
+    @media screen and (max-width: 685px) {
         main {
             top: 112px;
         }
         #map-canvas {
-            height: 65%;
+            height: 55%;
             width: 100%;
         }
         #right-panel {
@@ -115,6 +115,7 @@
             margin: auto;
             padding: 5px;
             margin-top: 2px;
+            max-width: 400px;
         }
         #firstName,
         #userName,
@@ -123,14 +124,14 @@
         }
     }
     
-    @media screen and (max-width: 695px) {
+    @media screen and (max-width: 585px) {
         main {
             top: 145px;
         }
         #map-canvas {
-            height: 60%;
+            height: 52%;
         }
         #right-panel {
-            height: 40%;
+            height: 35%;
         }
     }
