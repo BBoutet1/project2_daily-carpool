@@ -8,12 +8,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Log in</title>
-    <link rel="stylesheet" href="css/foundation.css">
-    <link rel="stylesheet" href="css/app.css">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link type="text/css" rel="stylesheet" href="css/profile.css" />
-    <title>Document</title>
+    <title>User profile</title>
 </head>
 
 <body>
@@ -29,7 +24,7 @@
         <!-- Naigation bar -->
         <div id="topbar-responsive" class="topbar-responsive-links">
             <div class="top-bar-right">
-                <ul class="menu simple vertical medium-horizontal">
+                <ul class="menu simple medium-horizontal">
                     <li>
                         <a href="http://localhost:8080/">Home</a></li>
                     <li>
@@ -48,114 +43,119 @@
             </div>
         </div>
     </nav>
+    <main>
+        <!-- Somewhere in the DOM for the map to be rendered -->
+        <div id="map-canvas"></div>
 
-    <!-- Somewhere in the DOM for the map to be rendered -->
-    <div id="map-canvas"></div>
-
-    <!-- User and routes informations -->
-    <div id="right-panel">
-        <!-- User sign in form -->
-        <form id="signIn" class="callout text-center" style="width: 95%;margin: 1%;">
-            <h5>Sign in</h5>
-            <div class="floated-label-wrapper">
-                <label for="full-name">First Name</label>
-                <input type="text" id="firstName" name="First name" placeholder="First name">
-            </div>
-            <div class="floated-label-wrapper">
-                <label for="pass">User name</label>
-                <input type="text" id="userName" name="User name" placeholder="User name">
-            </div>
-            <div class="floated-label-wrapper">
-                <p style="float:left">User type</p>
-                <select id="userType" style=" width: 60%; ">
+        <!-- User and routes informations -->
+        <div id="right-panel">
+            <!-- User sign in form -->
+            <form id="signIn" class="callout text-center">
+                <h5>Sign in</h5>
+                <div class="floated-label-wrapper">
+                    <label for="full-name">First Name</label>
+                    <input type="text" id="firstName" name="First name" placeholder="First name">
+                </div>
+                <div class="floated-label-wrapper">
+                    <label for="pass">User name</label>
+                    <input type="text" id="userName" name="User name" placeholder="User name">
+                </div>
+                <div class="floated-label-wrapper">
+                    <p style="float:left">User type</p>
+                    <select id="userType" style=" width: 60%; ">
                 <option value="Driver">Driver</option>
                 <option value="Passenger">Passenger</option>
               </select>
-            </div>
-            <input class="button button-rounded-hover4" type="submit" value="Submit">
-        </form>
-        <!-- User info an routes display -->
-        <main class="profile">
-            <h4 id="welcome" style="width:95%">
-            </h4>
-            <!-- <p id="saveType" style="display: none;"> </p> -->
-            <h5 id="yourRoute" style="width:95%; padding-left: 10px; color: blue;">
-                Your direct route profile...
-            </h5>
-            <table style="width:95%">
-                <tr>
-                    <th>Home address</th>
-                    <th>Work address</th>
-                </tr>
-                <tr>
-                    <td id="origin"></td>
-                    <td id="dest"></td>
-                </tr>
-                <tr>
-                    <th>Direct distance</th>
-                    <th>Direct duration</th>
-                </tr>
-                <tr>
-                    <td id="directDistance">wait...</td>
-                    <td id="directTime">wait...</td>
-                </tr>
-            </table>
-            <h5 id="companion" class="carpool" style="width:95%; padding-left: 10px; color: red; display: none;">
-            </h5>
-            <table id="pRoute" class="carpool" style="width:95%;  display: none;">
-                <tr>
-                    <th>Home address</th>
-                    <th>Work address</th>
-                </tr>
-                <tr>
-                    <td id="pOrigin"></td>
-                    <td id="pDestination"></td>
-                </tr>
-                <tr class="passengerDirect">
-                    <th>Direct distance</th>
-                    <th>Direct duration</th>
-                </tr>
-                <tr class="passengerDirect">
-                    <td id="dDistance"></td>
-                    <td id="dDuration"></td>
-                </tr>
-            </table>
-            <h5 id="detour" class="carpool" style="width:95%; padding-left: 10px; color: green; display: none;">
-                Driver detour...
-            </h5>
-            <table class="carpool" style="width:95%; display: none;">
-                <tr>
-                    <th>Detoured distance</th>
-                    <th>Detoured duration</th>
-                    <th>Time difference</th>
-                </tr>
-                <tr>
-                    <td id="detouredDistance">wait...</td>
-                    <td id="detouredTime">wait...</td>
-                    <td id="difference">wait...</td>
-                </tr>
-            </table>
-            <div style="width:95%">
-                <label id="list">Select your passenger:</label>
-                <select style="float: left; width: 85%; height: 100%;" id="select">No selection
+                </div>
+                <input class="button button-rounded-hover4" type="submit" value="Submit">
+            </form>
+            <!-- User info an routes display -->
+            <section class="profile">
+                <h4 id="welcome" style="width:95%">
+                </h4>
+                <!-- <p id="saveType" style="display: none;"> </p> -->
+                <h5 id="yourRoute" style="width:95%; padding-left: 10px; color: blue;">
+                    Your direct route profile...
+                </h5>
+                <table style="width:95%">
+                    <tr>
+                        <th>Home address</th>
+                        <th>Work address</th>
+                    </tr>
+                    <tr>
+                        <td id="origin"></td>
+                        <td id="dest"></td>
+                    </tr>
+                    <tr>
+                        <th>Direct distance</th>
+                        <th>Direct duration</th>
+                    </tr>
+                    <tr>
+                        <td id="directDistance">wait...</td>
+                        <td id="directTime">wait...</td>
+                    </tr>
+                </table>
+                <h5 id="companion" class="carpool" style="width:95%; padding-left: 10px; color: red; display: none;">
+                </h5>
+                <table id="pRoute" class="carpool" style="width:95%;  display: none;">
+                    <tr>
+                        <th>Home address</th>
+                        <th>Work address</th>
+                    </tr>
+                    <tr>
+                        <td id="pOrigin"></td>
+                        <td id="pDestination"></td>
+                    </tr>
+                    <tr class="passengerDirect">
+                        <th>Direct distance</th>
+                        <th>Direct duration</th>
+                    </tr>
+                    <tr class="passengerDirect">
+                        <td id="dDistance"></td>
+                        <td id="dDuration"></td>
+                    </tr>
+                </table>
+                <h5 id="detour" class="carpool" style="width:95%; padding-left: 10px; color: green; display: none;">
+                    Driver detour...
+                </h5>
+                <table class="carpool" style="width:95%; display: none;">
+                    <tr>
+                        <th>Detoured distance</th>
+                        <th>Detoured duration</th>
+                        <th>Time difference</th>
+                    </tr>
+                    <tr>
+                        <td id="detouredDistance">wait...</td>
+                        <td id="detouredTime">wait...</td>
+                        <td id="difference">wait...</td>
+                    </tr>
+                </table>
+                <div style="width:95%">
+                    <label id="list">Select your passenger:</label>
+                    <select style="float: left; width: 85%; height: 100%;" id="select">No selection
                     <option value="0"> No selection </option>
                 </select>
-                <input class="button button button-rounded-hover5 carpool" id="merge" type="submit " value="Merge routes" style="display: none;">
-            </div>
-            <div>
-            </div>
-        </main>
-    </div>
+                    <input class="button button button-rounded-hover5 carpool" id="merge" type="submit " value="Merge routes" style="display: none;">
+                </div>
+                <div>
+                </div>
+            </section>
+        </div>
+    </main>
 
-    <!-- Load the Google Maps aPI -->
+
+
+    <!-- Load the Google Maps API -->
     <script type="text/javascript " src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDE2yBUEZx3Cup_pwq22o_WferVgBpgSdE "></script>
-    <!-- All of the script for multiple requests -->
+
+
+    <!-- The script for API multiple requests -->
     <script type="text/javascript " src="js/profile.js "></script>
-    <!-- <script type="text/javascript " src="js/routesMap.js "></script> -->
-    <script src="js/vendor/jquery.js "></script>
-    <script src="js/vendor/what-input.js "></script>
-    <script src="js/vendor/foundation.js "></script>
-    <script src="js/app.js "></script>
+
+    <link rel="stylesheet" href="css/foundation.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link type="text/css" rel="stylesheet" href="css/profile.css" />
 </body>
 
 </html>

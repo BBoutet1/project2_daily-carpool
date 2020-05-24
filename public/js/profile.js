@@ -11,7 +11,6 @@ $(document).ready(function() {
     let lineWeight = [6, 9, 2.5]; // routes polylines weight to make them distincts
     let markerScale = [7, 5, 3];
 
-
     let routesArray = {}; //User and routes;
     let routesOptions = {}; // routes in options with a passenger or driver
     let passengersRoutes = {}; // passengers direct route
@@ -19,9 +18,7 @@ $(document).ready(function() {
     let optionsIdentity = {}; // names and first names array
     let durationsDistances = {}; //[sec, h, km]
 
-
     let option = 0; // selected passagenr (for driver) or driver (for passenger) option number
-
 
     let queryURL = ""; //Called API based on signed in user type
     let queryURL2 = ""; // Second API for route companion selection

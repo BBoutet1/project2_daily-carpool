@@ -11,8 +11,6 @@ $(document).ready(function() {
     $("#driver-form").on("submit", handleDriverFormSubmit);
     //$(document).on("click", ".delete-driver", handleDeleteButtonPress);
 
-    // Getting the initial list of Drivers
-    getDrivers();
 
     // A function to handle what happens when the form is submitted to create a new Driver
     async function handleDriverFormSubmit(event) {
