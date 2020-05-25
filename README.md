@@ -78,12 +78,13 @@ direct route is displayed..
 
 ## Futur developments
 
-- The addresses should be validated at the registration. No registration should be allowed with incorrect addresses
+- The addresses should be validated at the registration step. No registration should be allowed with incorrect addresses
 - Detoured route distance, time and differences have to be calculated when signing in for each option to allow user 
-to directly select the best choice. Available options offered should be limited to the best ones in term of detour cost 
-(time and distance differences). 
+to directly select the best choice. 
+- Available companion options offered should be limited to the best ones in term of detour cost (time and distance differences). 
+- The destination arrival time and direction as additional filters to match passengers and drivers
 - Errors must be handled.
-- Thinking about to include the food delivery.
+- Thinking about to include the food delivery usind detoured driver routes.
 
 ## Licence
 
