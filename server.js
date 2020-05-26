@@ -28,9 +28,6 @@ app.use(express.json());
 // Static directory
 app.use(express.static("public"));
 
-
-
-
 // app.use(routes);
 
 // Routes
@@ -38,9 +35,6 @@ app.use(express.static("public"));
 require("./routes/html-routes.js")(app);
 require("./routes/driver-api-routes.js")(app);
 require("./routes/passenger-api-routes.js")(app);
-
-
-
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
