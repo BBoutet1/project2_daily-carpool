@@ -6,11 +6,14 @@
 // =============================================================
 
 var express = require("express");
-const bodyParser = require('body-parser');
+
+
 
 // Sets up the Express App
 // =============================================================
 var app = express();
+var router = express.Router();
+
 var PORT = process.env.PORT || 8080;
 
 // Requiring our models for syncing
@@ -25,11 +28,19 @@ app.use(express.json());
 // Static directory
 app.use(express.static("public"));
 
+
+
+
+// app.use(routes);
+
 // Routes
 // =============================================================
 require("./routes/html-routes.js")(app);
 require("./routes/driver-api-routes.js")(app);
 require("./routes/passenger-api-routes.js")(app);
+
+
+
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================

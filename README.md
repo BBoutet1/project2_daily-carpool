@@ -1,6 +1,5 @@
 # Daily Commuter Carpool (DCC)
 
-
 This web application matches workers to share a daily ride as drivers and passenger on their way to/from work. The user selects a companion: a passenger if you are a driver or a driver if you are a passenger. To have an idea of the detour cost, the selection shows how much the driver route is detoured by comparing the driver direct route and the detoured route (to pick up the passenger) in term of distance and duration.
 
 ## Table of contents
@@ -21,19 +20,17 @@ This web application matches workers to share a daily ride as drivers and passen
 </details>
 <!-- ⛔️ MD-MAGIC-EXAMPLE:END -->
 
-
 ## Technologies used
-
 
 - HTML5
 - CSS3
-- Foundation 
+- Foundation (css framework)
 - Javascript
 - jQuery
 - Node
 - EXpress
 - Node
-
+- handlebars
 
 ## Installation
 
@@ -78,19 +75,26 @@ direct route is displayed..
 
 ## Futur developments
 
-- The addresses should be validated at the registration step. No registration should be allowed with incorrect addresses
-- Detoured route distance, time and differences have to be calculated when signing in for each option to allow user 
-to directly select the best choice. 
-- Available companion options offered should be limited to the best ones in term of detour cost (time and distance differences). 
-- The destination arrival time and direction as additional filters to match passengers and drivers
-- Errors must be handled.
+- The addresses validation at the registration step. No registration should be allowed with incorrect addresses or
+nonexistent driving route
+- Let the user to select tolls avoidance or not
+- Detoured route distance, time and differences calculation when signing in for each option to allow user to directly
+the best choice instead of checking each option. 
+- Available options limitations to the best ones in term of detour cost (time and distance differences). 
+- Notification email to the selected option user as additional function for the `Merge routes` button.
+- The latest arrival time as additional filters to match passengers and drivers
+- Errors handling.
+- Complete the Contact Us code with an email submission form
+- Complete the menu icon: about us, application use, etc.
 - Thinking about to include the food delivery usind detoured driver routes.
+- Make the code cleaner
+
 
 ## Licence
 
 © 2020. All Rights Reserved.
 
-## Authors information
+## Authors information   
 
 - Brice Boutet 
     - GitHub : [BBoutet1](https://github.com/bboutet1)
