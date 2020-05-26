@@ -10,10 +10,6 @@ $(document).ready(function() {
     // Adding event listeners to the form to create a new object, and the button to delete
     // an Passenger
     $("#passenger-form").on("submit", handlePassengerFormSubmit);
-    //$(document).on("click", ".delete-passenger", handleDeleteButtonPress);
-
-    // Getting the initial list of Passengers
-    getPassengers();
 
     // A function to handle what happens when the form is submitted to create a new Passenger
     function handlePassengerFormSubmit(event) {

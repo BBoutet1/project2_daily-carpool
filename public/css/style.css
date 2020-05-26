@@ -20,7 +20,7 @@ li {
 
 .hero-section {
     position: absolute;
-    top: 90px;
+    top: 82px;
     width: 100%;
     background: url("https://static.pexels.com/photos/248064/pexels-photo-248064.jpeg") 50% no-repeat;
     background-size: cover;
@@ -716,7 +716,7 @@ li {
     }
     .hero-section {
         position: absolute;
-        top: 140px;
+        top: 112px;
     }
     .callout {
         margin: 0;
