@@ -54,17 +54,17 @@
         overflow: auto;
     }
     
-    th,
-    td {
-        border: 1px solid black;
-        border-style: solid;
-        text-align: left;
-        height: 20px;
-    }
-    
     table {
         margin: 5px;
         margin-bottom: 20px;
+    }
+    
+    tbody th,
+    tbody td {
+        border: 1px solid black;
+        border-style: solid;
+        text-align: left;
+        padding: 0 0 0 0.625rem;
     }
     
     #firstName,
