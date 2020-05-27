@@ -12,13 +12,13 @@ $(document).ready(function() {
     let markerScale = [7, 5, 3];
 
     let routesArray = {}; //User and routes;
-    let routesOptions = {}; // routes in options with a passenger or driver
+    let routesOptions = {}; // derouted routes options
     let passengersRoutes = {}; // passengers direct route
     let driversRoutes = {}; // drivers direct route
     let optionsIdentity = {}; // names and first names array
-    let durationsDistances = {}; //[sec, h, km]
+    let durationsDistances = {}; //[time(sec), time(h), distance (km)]
 
-    let option = 0; // selected passagenr (for driver) or driver (for passenger) option number
+    let option = 0; // selection option number
 
     let queryURL = ""; //Called API based on signed in user type
     let queryURL2 = ""; // Second API for route companion selection
@@ -48,11 +48,11 @@ $(document).ready(function() {
 
 
         if (inputType == "Driver") {
-            queryURL = "http://localhost:8080/api/drivers" // user called API
-            queryURL2 = "http://localhost:8080/api/passengers" // second API for companion selection
+            queryURL = "/api/drivers" // user called API
+            queryURL2 = "/api/passengers" // second API for companion selection
         } else {
-            queryURL = "http://localhost:8080/api/passengers"
-            queryURL2 = "http://localhost:8080/api/drivers"
+            queryURL = "/api/passengers"
+            queryURL2 = "/api/drivers"
         }
 
         $.ajax({
