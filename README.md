@@ -83,6 +83,7 @@ nonexistent driving route
 - Notification email to the selected option user as additional function for the `Merge routes` button.
 - Save updated route in database and allow up to 3 passengers.
 - The latest arrival time as additional filter to match passengers and drivers.
+- Profile update functionality
 - Errors handling.
 - Complete the Contact Us code with an email submission form
 - Complete the menu icon: about us, application use, etc.

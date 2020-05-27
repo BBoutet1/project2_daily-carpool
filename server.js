@@ -6,13 +6,13 @@
 // =============================================================
 
 var express = require("express");
-
+var compression = require('compression')
 
 
 // Sets up the Express App
 // =============================================================
 var app = express();
-var router = express.Router();
+app.use(compression())
 
 var PORT = process.env.PORT || 8080;
 
