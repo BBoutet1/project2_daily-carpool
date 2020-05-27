@@ -27,7 +27,7 @@ $(document).ready(function() {
             return;
         }
 
-        let queryURL = "http://localhost:8080/api/passengers";
+        let queryURL = "/api/passengers";
         $.ajax({
                 url: queryURL,
                 method: "GET"
