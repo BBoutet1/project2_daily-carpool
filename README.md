@@ -1,4 +1,4 @@
-# Daily Commuter Carpool (DCC)
+# Daily Commute Carpool (DCC)
 
 This web application matches workers to share a daily ride as `drivers` and `passengers` on their way to/from work. The user selects a `companion`: a passenger if he is a driver or a driver if he is a passenger. To have an idea of the `detour cost` to pick-up and drop-off the passenger, the companion option selection shows how much the driver route is detoured by comparing the driver direct route and the driver detoured route in term of distance and duration.
 
