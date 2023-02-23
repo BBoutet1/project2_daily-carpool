@@ -20,7 +20,7 @@
     "jquery": "^3.5.1",
     "mysql2": "^1.6.4",
     "nodemon": "^2.0.3",
-    "sequelize": "^4.44.4"
+    "sequelize": "^6.28.2"
   },
   "devDependencies": {},
   "repository": {
